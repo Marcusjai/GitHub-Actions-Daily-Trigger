@@ -1,0 +1,175 @@
+{
+  "last_updated": "2026-08-14 11:53:11 UTC",
+  "indices": [
+    {
+      "ticker": "SPY",
+      "name": "標普 500 ETF",
+      "cat": "INDEX",
+      "price": 777.88,
+      "return": 0.7,
+      "change": "+5.39",
+      "alpha": 0.0,
+      "rvol": 0.73,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "QQQ",
+      "name": "納斯達克 100 ETF",
+      "cat": "INDEX",
+      "price": 732.07,
+      "return": 1.16,
+      "change": "+8.37",
+      "alpha": 0.46,
+      "rvol": 0.77,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "IWM",
+      "name": "羅素 2000 細盤股",
+      "cat": "INDEX",
+      "price": 303.5,
+      "return": 0.26,
+      "change": "+0.79",
+      "alpha": -0.44,
+      "rvol": 0.69,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "DIA",
+      "name": "道瓊斯工業 ETF",
+      "cat": "INDEX",
+      "price": 537.91,
+      "return": 0.14,
+      "change": "+0.76",
+      "alpha": -0.56,
+      "rvol": 0.51,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    }
+  ],
+  "sectors": [
+    {
+      "ticker": "XLP",
+      "name": "必選消費 ETF",
+      "cat": "DEFENSIVE",
+      "price": 86.0,
+      "return": 1.08,
+      "change": "+0.92",
+      "alpha": 0.38,
+      "rvol": 0.96,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLK",
+      "name": "科技板塊 ETF",
+      "cat": "TECH",
+      "price": 190.77,
+      "return": 1.01,
+      "change": "+1.91",
+      "alpha": 0.31,
+      "rvol": 0.56,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "SMH",
+      "name": "半導體 ETF",
+      "cat": "TECH",
+      "price": 589.12,
+      "return": 0.73,
+      "change": "+4.29",
+      "alpha": 0.03,
+      "rvol": 0.56,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLF",
+      "name": "金融板塊 ETF",
+      "cat": "CYCLICAL",
+      "price": 58.26,
+      "return": 0.59,
+      "change": "+0.34",
+      "alpha": -0.11,
+      "rvol": 0.77,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLU",
+      "name": "電力公用事業 ETF",
+      "cat": "POWER",
+      "price": 44.04,
+      "return": 0.46,
+      "change": "+0.2",
+      "alpha": -0.24,
+      "rvol": 0.88,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "URA",
+      "name": "核能與鈾礦 ETF",
+      "cat": "POWER",
+      "price": 45.25,
+      "return": 0.11,
+      "change": "+0.05",
+      "alpha": -0.59,
+      "rvol": 0.98,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLE",
+      "name": "傳統能源 ETF",
+      "cat": "CYCLICAL",
+      "price": 61.06,
+      "return": 0.05,
+      "change": "+0.03",
+      "alpha": -0.65,
+      "rvol": 0.73,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLV",
+      "name": "醫療保健 ETF",
+      "cat": "DEFENSIVE",
+      "price": 168.38,
+      "return": -0.04,
+      "change": "-0.06",
+      "alpha": -0.74,
+      "rvol": 0.72,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XLI",
+      "name": "工業板塊 ETF",
+      "cat": "CYCLICAL",
+      "price": 185.79,
+      "return": -0.05,
+      "change": "-0.09",
+      "alpha": -0.75,
+      "rvol": 0.77,
+      "darkPool": 46.5,
+      "signal": "NEUTRAL"
+    },
+    {
+      "ticker": "XBI",
+      "name": "生科生技 ETF",
+      "cat": "TECH",
+      "price": 156.86,
+      "return": -1.59,
+      "change": "-2.53",
+      "alpha": -2.29,
+      "rvol": 0.94,
+      "darkPool": 46.5,
+      "signal": "DISTRIBUTION"
+    }
+  ]
+}
