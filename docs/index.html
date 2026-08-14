@@ -332,22 +332,22 @@
     let sortState = { col: 'alpha', dir: 'desc' };
     let alphaChartInstance = null;
 
-    // Precise Exchange mapping for ChartExchange URL routing
+    // PRECISE EXCHANGE MAPPING: Forced all NYSE/Arca to 'nyse'
     const EXCHANGE_MAP = {
-      "SPY": "nysearca",
+      "SPY": "nyse",
       "QQQ": "nasdaq",
-      "IWM": "nysearca",
-      "DIA": "nysearca",
+      "IWM": "nyse",
+      "DIA": "nyse",
       "SMH": "nasdaq",
-      "URA": "nysearca",
-      "XLU": "nysearca",
-      "XLK": "nysearca",
-      "XLI": "nysearca",
-      "XLF": "nysearca",
-      "XBI": "nysearca",
-      "XLE": "nysearca",
-      "XLV": "nysearca",
-      "XLP": "nysearca"
+      "URA": "nyse",
+      "XLU": "nyse",
+      "XLK": "nyse",
+      "XLI": "nyse",
+      "XLF": "nyse",
+      "XBI": "nyse",
+      "XLE": "nyse",
+      "XLV": "nyse",
+      "XLP": "nyse"
     };
 
     const TARGET_WATCHLIST = [
@@ -399,9 +399,19 @@
       try {
         const tickers = TARGET_WATCHLIST.map(w => w.ticker).join(',');
         const apiUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${tickers}`;
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+        
+        // Changed to a more robust proxy and added random parameter to prevent caching
+        const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}&t=${Date.now()}`;
 
-        const res = await fetch(proxyUrl);
+        // Added AbortController for custom timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
+        const res = await fetch(proxyUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        
         const data = await res.json();
         const quotes = data.quoteResponse.result;
 
