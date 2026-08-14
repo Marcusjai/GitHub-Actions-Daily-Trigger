@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14 12:46:53 UTC",
+  "last_updated": "2026-08-14 13:07:32 UTC",
   "indices": [
     {
       "ticker": "SPY",
@@ -10,7 +10,7 @@
       "change": "+5.39",
       "alpha": 0.0,
       "rvol": 0.73,
-      "darkPool": 46.5,
+      "darkPool": 41.5,
       "signal": "NEUTRAL"
     },
     {
@@ -22,7 +22,7 @@
       "change": "+8.37",
       "alpha": 0.46,
       "rvol": 0.77,
-      "darkPool": 46.5,
+      "darkPool": 40.27,
       "signal": "NEUTRAL"
     },
     {
@@ -34,7 +34,7 @@
       "change": "+0.79",
       "alpha": -0.44,
       "rvol": 0.69,
-      "darkPool": 46.5,
+      "darkPool": 50.5,
       "signal": "NEUTRAL"
     },
     {
@@ -46,7 +46,7 @@
       "change": "+0.76",
       "alpha": -0.56,
       "rvol": 0.51,
-      "darkPool": 46.5,
+      "darkPool": 43.5,
       "signal": "NEUTRAL"
     }
   ],
@@ -60,7 +60,7 @@
       "change": "+0.92",
       "alpha": 0.38,
       "rvol": 0.96,
-      "darkPool": 46.5,
+      "darkPool": 45.5,
       "signal": "NEUTRAL"
     },
     {
@@ -72,7 +72,7 @@
       "change": "+1.91",
       "alpha": 0.31,
       "rvol": 0.56,
-      "darkPool": 46.5,
+      "darkPool": 52.5,
       "signal": "NEUTRAL"
     },
     {
@@ -84,7 +84,7 @@
       "change": "+4.29",
       "alpha": 0.03,
       "rvol": 0.56,
-      "darkPool": 46.5,
+      "darkPool": 43.16,
       "signal": "NEUTRAL"
     },
     {
@@ -96,7 +96,7 @@
       "change": "+0.34",
       "alpha": -0.11,
       "rvol": 0.77,
-      "darkPool": 46.5,
+      "darkPool": 47.5,
       "signal": "NEUTRAL"
     },
     {
@@ -108,7 +108,7 @@
       "change": "+0.2",
       "alpha": -0.24,
       "rvol": 0.88,
-      "darkPool": 46.5,
+      "darkPool": 50.5,
       "signal": "NEUTRAL"
     },
     {
@@ -120,7 +120,7 @@
       "change": "+0.05",
       "alpha": -0.59,
       "rvol": 0.98,
-      "darkPool": 46.5,
+      "darkPool": 45.5,
       "signal": "NEUTRAL"
     },
     {
@@ -144,7 +144,7 @@
       "change": "-0.06",
       "alpha": -0.74,
       "rvol": 0.72,
-      "darkPool": 46.5,
+      "darkPool": 51.5,
       "signal": "NEUTRAL"
     },
     {
@@ -155,8 +155,8 @@
       "return": -0.05,
       "change": "-0.09",
       "alpha": -0.75,
-      "rvol": 0.77,
-      "darkPool": 46.5,
+      "rvol": 0.75,
+      "darkPool": 50.5,
       "signal": "NEUTRAL"
     },
     {
@@ -168,7 +168,7 @@
       "change": "-2.53",
       "alpha": -2.29,
       "rvol": 0.94,
-      "darkPool": 46.5,
+      "darkPool": 52.5,
       "signal": "DISTRIBUTION"
     }
   ]
