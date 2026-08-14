@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install Dependencies
-        run: pip install yfinance pandas requests beautifulsoup4
+        run: pip install yfinance pandas requests beautifulsoup4 cloudscraper
 
       - name: Run Real Data Scraper Engine
         run: python generate_data.py
