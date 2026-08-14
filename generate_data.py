@@ -5,22 +5,22 @@ import requests
 from datetime import datetime
 import yfinance as yf
 
-# Exact exchange mapping for ChartExchange URL routing
+# Exact exchange mapping for ChartExchange URL routing (ChartExchange requires 'nyse' or 'nasdaq')
 EXCHANGE_MAP = {
-    "SPY": "nysearca",
+    "SPY": "nyse",
     "QQQ": "nasdaq",
-    "IWM": "nysearca",
-    "DIA": "nysearca",
+    "IWM": "nyse",
+    "DIA": "nyse",
     "SMH": "nasdaq",
-    "URA": "nysearca",
-    "XLU": "nysearca",
-    "XLK": "nysearca",
-    "XLI": "nysearca",
-    "XLF": "nysearca",
-    "XBI": "nysearca",
-    "XLE": "nysearca",
-    "XLV": "nysearca",
-    "XLP": "nysearca"
+    "URA": "nyse",
+    "XLU": "nyse",
+    "XLK": "nyse",
+    "XLI": "nyse",
+    "XLF": "nyse",
+    "XBI": "nyse",
+    "XLE": "nyse",
+    "XLV": "nyse",
+    "XLP": "nyse"
 }
 
 WATCHLIST = {
