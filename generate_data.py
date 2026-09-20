@@ -110,7 +110,7 @@ def fetch_chartexchange_darkpool_pct(ticker):
 def generate_real_market_json():
     print("Fetching real market data from Yahoo Finance...")
     tickers = list(WATCHLIST.keys())
-    data = yfinance.download(tickers, period="1mo", interval="1d", group_by="ticker", auto_adjust=True)
+    data = yf.download(tickers, period="1mo", interval="1d", group_by="ticker", auto_adjust=True)
     
     spy_close = data["SPY"]["Close"]
     spy_ret = float((spy_close.iloc[-1] / spy_close.iloc[-2]) - 1)
