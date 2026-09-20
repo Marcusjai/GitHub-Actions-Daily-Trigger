@@ -1,35 +1,89 @@
-name: Update Daily 100% Real Market Data
+name: Update Daily Market Data
 
 on:
   schedule:
     - cron: '30 21 * * 1-5'
   workflow_dispatch:
+  push:
+    branches: [main, 'fix/**']
+    paths:
+      - 'generate_data.py'
+      - 'requirements.txt'
+      - 'docs/index.html'
+      - 'docs/dashboard.js'
+      - 'tests/**'
+      - 'scripts/**'
+      - '.github/workflows/update_dashboard.yml'
+  pull_request:
+    branches: [main]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: market-dashboard-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  scrape-and-deploy:
-    runs-on: ubuntu-latest
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test market calculations and missing-data handling
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Test dashboard rendering and data integrity
+        run: |
+          node --check docs/dashboard.js
+          node --test tests/dashboard.test.cjs
 
-      - name: Install Dependencies
-        run: pip install yfinance pandas requests beautifulsoup4 cloudscraper
-
+  scrape-and-deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Checkout tested commit
+        uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
       - name: Run Real Data Scraper Engine
         run: python generate_data.py
-
-      - name: Commit and Push Updated data.json
+      - name: Commit and push validated data.json
+        shell: bash
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add docs/data.json
-          git commit -m "Auto-update 100% real market & ChartExchange data: $(date -u)" || exit 0
-          git push
+          if git diff --cached --quiet; then
+            echo 'No snapshot change; no commit needed.'
+          else
+            git commit -m "Update daily market snapshot: $(date -u +%FT%TZ)"
+            git push origin HEAD:main
+          fi
+          echo "Published source commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Request Pages build and verify published snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Bot pushes do not automatically trigger a branch-based Pages build.
+          # Request a build explicitly; do not change the user's Pages settings.
+          pages_url=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.html_url')
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+          python scripts/verify_pages.py "$pages_url"
