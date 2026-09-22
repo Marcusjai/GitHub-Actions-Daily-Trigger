@@ -122,6 +122,7 @@ class RecoveryTests(unittest.TestCase):
         self.stack=contextlib.ExitStack()
         self.addCleanup(self.stack.close)
         self.stack.enter_context(contextlib.redirect_stdout(io.StringIO()))
+        self.chart=self.stack.enter_context(patch.object(h,'download_chart_history',side_effect=ValueError('No closing quote in this fixture')))
         self.sleep=self.stack.enter_context(patch.object(h.time,'sleep'))
         self.download=self.stack.enter_context(patch.object(h.yf,'download',return_value=batch()))
         self.ticker=self.stack.enter_context(patch.object(h.yf,'Ticker',create=True))
