@@ -1,0 +1,59 @@
+name: Diagnose Yahoo source observations
+on:
+  push:
+    branches: [fix/yahoo-session-recovery-20260922]
+    paths: ['.github/workflows/diagnose_yahoo.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Inspect source observations without modifying any snapshot
+        run: |
+          python - <<'PY'
+          import json
+          import pandas as pd
+          import yfinance as yf
+          from curl_cffi import requests
+          from scripts.yahoo_history import completed_sessions
+          dates = completed_sessions()
+          start = str(dates[0].date())
+          end = str((dates[-1]+pd.Timedelta(days=1)).date())
+          print('Expected session:', dates[-1], 'yfinance:', yf.__version__)
+          for symbol in ['SPY','QQQ']:
+              for mode in ['raw_explicit','raw_period','adjusted_period']:
+                  try:
+                      ticker = yf.Ticker(symbol)
+                      opts = {'period':'3mo'} if 'period' in mode else {'start':start,'end':end}
+                      f = ticker.history(interval='1d', auto_adjust=mode=='adjusted_period', repair=False, keepna=True, timeout=20, **opts)
+                      cols=[c for c in ['Open','High','Low','Close','Adj Close','Volume','Dividends','Stock Splits'] if c in f.columns]
+                      print('\nHISTORY', symbol, mode, 'rows',len(f), 'index',repr(f.index))
+                      print(f[cols].tail(5).to_string())
+                  except Exception as exc:
+                      print('HISTORY ERROR',symbol,mode,type(exc).__name__,str(exc))
+              for host in ['query1.finance.yahoo.com','query2.finance.yahoo.com']:
+                  try:
+                      with requests.Session(impersonate='chrome') as session:
+                          resp=session.get(f'https://{host}/v8/finance/chart/{symbol}',params={'range':'1mo','interval':'1d','includeAdjustedClose':'true','events':'div,splits'},timeout=20)
+                          print('\nRAW CHART',symbol,host,'HTTP',resp.status_code)
+                          resp.raise_for_status()
+                          result=resp.json()['chart']['result'][0]
+                          meta=result.get('meta',{})
+                          print('META',json.dumps({k:meta.get(k) for k in ['symbol','currency','exchangeTimezoneName','regularMarketTime','regularMarketPrice','chartPreviousClose']}))
+                          ts=result.get('timestamp',[])
+                          quote=result['indicators']['quote'][0]
+                          adj=result['indicators'].get('adjclose',[{}])[0].get('adjclose',[])
+                          for i in range(max(0,len(ts)-5),len(ts)):
+                              print('BAR',pd.Timestamp(ts[i],unit='s',tz='UTC').isoformat(), {k:v[i] if len(v)>i else None for k,v in quote.items()},'adjclose',adj[i] if len(adj)>i else None)
+                  except Exception as exc:
+                      print('CHART ERROR',symbol,host,type(exc).__name__,str(exc))
+          PY
