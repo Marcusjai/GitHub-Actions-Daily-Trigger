@@ -16,6 +16,7 @@ from typing import Any
 import exchange_calendars as xcals
 import pandas as pd
 import yfinance as yf
+from scripts.yahoo_chart import download_chart_history
 
 PUBLICATION_BUFFER_MINUTES = 30
 RETRY_DELAYS = (2, 6)
@@ -123,6 +124,9 @@ def download_market_history(tickers: Sequence[str], *, asof: Any = None) -> pd.D
     frames: dict[str, pd.DataFrame] = {}
     failures: dict[str, str] = {}
     recovered = []
+    quote_recoveries = []
+    close_at = xcals.get_calendar(
+        "XNYS", start=start, end=end).session_close(dates[-1])
     for ticker in tickers:
         try:
             frames[ticker] = validated_window(_batch_frame(batch, ticker), ticker, dates)
@@ -150,6 +154,22 @@ def download_market_history(tickers: Sequence[str], *, asof: Any = None) -> pd.D
                 failures.pop(ticker, None)
                 print(f'{ticker}: recovered complete history through {dates[-1].date()}', flush=True)
                 break
+        if ticker in failures:
+            try:
+                history, provenance = download_chart_history(ticker, dates, close_at)
+                frames[ticker] = validated_window(history, ticker, dates)
+            except Exception as exc:
+                failures[ticker] += f'; chart recovery rejected: {type(exc).__name__}: {exc}'
+                print(f'{ticker}: chart recovery rejected: {exc}', flush=True)
+            else:
+                recovered.append(ticker)
+                failures.pop(ticker, None)
+                if provenance:
+                    quote_recoveries.append(provenance)
+                    print(f"{ticker}: recovered from exact closing quote at "
+                          f"{provenance['quote_time_utc']}: {provenance['price']}", flush=True)
+                else:
+                    print(f'{ticker}: complete chart history recovered without replacement', flush=True)
     if failures:
         raise ValueError('Yahoo history still incomplete after bounded retries; '
                          'existing snapshot preserved. ' +
@@ -161,7 +181,8 @@ def download_market_history(tickers: Sequence[str], *, asof: Any = None) -> pd.D
         'first_required_session': start, 'required_sessions': 21,
         'asof_utc': now.tz_convert('UTC').isoformat(),
         'publication_buffer_minutes': PUBLICATION_BUFFER_MINUTES,
-        'recovered_tickers': recovered, 'missing_required_observations': 0,
-        'fill_policy': 'none; required dates must have finite source observations',
+        'recovered_tickers': recovered, 'closing_quote_recoveries': quote_recoveries,
+        'missing_required_observations': 0,
+        'fill_policy': 'no estimates or forward fill; missing latest daily close may use an exact-timestamp closing quote with recorded provenance',
     }
     return data

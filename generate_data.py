@@ -233,6 +233,13 @@ def generate_real_market_json(output_path: Path = Path("docs/data.json")) -> dic
     print("Fetching and validating completed Yahoo daily sessions...", flush=True)
     data = download_market_history(list(WATCHLIST))
     items, market_date = build_market_items(data)
+    quote_sources = {record["ticker"]: record for record in
+                     data.attrs.get("history_validation", {}).get("closing_quote_recoveries", [])}
+    for item in items:
+        item["priceSource"] = ("yahoo_closing_quote" if item["ticker"] in quote_sources
+                               else "yahoo_adjusted_daily_history")
+        if item["ticker"] in quote_sources:
+            item["priceRecovery"] = quote_sources[item["ticker"]]
     missing = []
     with requests.Session() as session:
         session.headers.update({"User-Agent": "Marcus-Market-Dashboard/1.0"})
@@ -250,7 +257,7 @@ def generate_real_market_json(output_path: Path = Path("docs/data.json")) -> dic
         "market_date": market_date,
         "data_quality": "partial" if missing else "available_not_independently_verified",
         "missing_off_exchange": missing,
-        "price_basis": "Yahoo auto_adjust=True; adjusted daily Close",
+        "price_basis": "Yahoo adjusted daily Close; exact closing quote recovery explicitly identified in priceSource/history_validation",
         "session_note": "Prices use the latest completed regular session after a 30-minute publication buffer; off-exchange snapshots may be partial.",
         "history_validation": data.attrs.get("history_validation", {}),
         "indices": indices, "sectors": sectors,
