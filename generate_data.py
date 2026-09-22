@@ -1,12 +1,12 @@
 """Build docs/data.json without inventing missing market observations.
 
-Requires Python 3.9+ and: yfinance, pandas, requests.
+Requires Python 3.11+ and the dependencies in requirements.txt.
 Run from the repository root: python generate_data.py
 
 The legacy key 'darkPool' stores ChartExchange's OFF-EXCHANGE daily percentage,
 not a pure dark-pool measure. It can be None (JSON null). Frontends must handle
 null and display data_quality / source dates. This is not a trading strategy
-validation. Latest provider daily bars may still be incomplete intraday.
+validation. Prices use completed sessions after a 30-minute publication buffer.
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from typing import Any, Optional
 
 import pandas as pd
 import requests
-import yfinance as yf
+from scripts.yahoo_history import download_market_history
 
 # Retained from the supplied script. Failed/changed routes yield missing data.
 EXCHANGE_MAP = {
@@ -230,11 +230,8 @@ def write_json_atomic(payload: dict[str, Any], path: Path) -> None:
 
 
 def generate_real_market_json(output_path: Path = Path("docs/data.json")) -> dict[str, Any]:
-    print("Fetching Yahoo daily data (3mo, adjusted OHLC)...", flush=True)
-    data = yf.download(
-        list(WATCHLIST), period="3mo", interval="1d", group_by="ticker",
-        auto_adjust=True, multi_level_index=True, progress=False, timeout=20,
-    )
+    print("Fetching and validating completed Yahoo daily sessions...", flush=True)
+    data = download_market_history(list(WATCHLIST))
     items, market_date = build_market_items(data)
     missing = []
     with requests.Session() as session:
@@ -254,7 +251,8 @@ def generate_real_market_json(output_path: Path = Path("docs/data.json")) -> dic
         "data_quality": "partial" if missing else "available_not_independently_verified",
         "missing_off_exchange": missing,
         "price_basis": "Yahoo auto_adjust=True; adjusted daily Close",
-        "session_note": "Latest provider daily bars and off-exchange snapshots may be incomplete intraday.",
+        "session_note": "Prices use the latest completed regular session after a 30-minute publication buffer; off-exchange snapshots may be partial.",
+        "history_validation": data.attrs.get("history_validation", {}),
         "indices": indices, "sectors": sectors,
     }
     write_json_atomic(payload, Path(output_path))

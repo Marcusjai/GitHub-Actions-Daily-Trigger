@@ -99,7 +99,7 @@ class MarketTests(unittest.TestCase):
             self.assertEqual(path.read_text(), 'old')
 
     def test_full_pipeline_partial_data(self):
-        with TemporaryDirectory() as folder, patch.object(g.yf, 'download', return_value=prices()), patch.object(g, 'fetch_off_exchange', return_value={'darkPool':None, 'darkPoolStatus':'unavailable'}):
+        with TemporaryDirectory() as folder, patch.object(g, 'download_market_history', return_value=prices()), patch.object(g, 'fetch_off_exchange', return_value={'darkPool':None, 'darkPoolStatus':'unavailable'}):
             path = Path(folder)/'docs/data.json'
             result = g.generate_real_market_json(path)
             self.assertEqual(result['data_quality'], 'partial')
@@ -108,7 +108,7 @@ class MarketTests(unittest.TestCase):
             self.assertEqual(json.loads(path.read_text()), result)
 
     def test_failed_pipeline_preserves_old_file(self):
-        with TemporaryDirectory() as folder, patch.object(g.yf, 'download', return_value=pd.DataFrame()):
+        with TemporaryDirectory() as folder, patch.object(g, 'download_market_history', return_value=pd.DataFrame()):
             path = Path(folder)/'data.json'; path.write_text('old')
             with self.assertRaises(ValueError): g.generate_real_market_json(path)
             self.assertEqual(path.read_text(), 'old')
