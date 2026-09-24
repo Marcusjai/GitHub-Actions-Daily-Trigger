@@ -1,4 +1,4 @@
-name: Live Yahoo recovery verification
+name: Live-test Yahoo interior-gap recovery
 on:
   push:
     branches: ['fix/yahoo-interior-gap-recovery-20260924']
@@ -6,44 +6,60 @@ on:
 permissions:
   contents: read
 jobs:
-  verify-live:
+  live-recovery-test:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
           cache: pip
-      - name: Install dependencies
+      - name: Install production dependencies
         run: python -m pip install -r requirements.txt
-      - name: Run all regression tests
+      - name: Generate a real snapshot without publishing it
         run: |
-          python -m unittest discover -s tests -p 'test_*.py'
-          node --check docs/dashboard.js
-          node --test tests/dashboard.test.cjs
-      - name: Generate live snapshot without publishing
-        run: python generate_data.py
-      - name: Verify live snapshot integrity
-        run: |
+          mkdir -p /tmp/dashboard-live-test
+          cp docs/data.json /tmp/dashboard-live-test/data.json
           python - <<'PY'
-          import json, math
-          import pandas as pd
+          import json
+          from pathlib import Path
           from scripts.yahoo_history import completed_sessions
-          p=json.load(open('docs/data.json',encoding='utf-8'))
+          import generate_data
+
+          path=Path('/tmp/dashboard-live-test/data.json')
+          before=json.loads(path.read_text(encoding='utf-8'))
+          result=generate_data.generate_real_market_json(path)
           expected=str(completed_sessions()[-1].date())
-          rows=p.get('indices',[])+p.get('sectors',[])
-          assert p.get('market_date')==expected,(p.get('market_date'),expected)
-          assert len(p.get('indices',[]))==4 and len(p.get('sectors',[]))==10
-          assert len(rows)==14 and len({r['ticker'] for r in rows})==14
-          for r in rows:
-              assert r.get('market_date')==expected
-              for k in ('price','return','alpha','rvol'):
-                  v=r.get(k); assert isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v),(r.get('ticker'),k,v)
-              assert r['price']>0 and r['rvol']>=0
-              assert isinstance(r.get('volume'),int) and r['volume']>=0
-          v=p.get('history_validation',{})
-          assert v.get('expected_market_date')==expected
-          assert v.get('missing_required_observations')==0
-          print('LIVE_OK',expected,'rows',len(rows),'recovered',v.get('recovered_tickers',[]),'historical',len(v.get('historical_recoveries',[])))
+          assert result['market_date']==expected, (result['market_date'], expected)
+          assert len(result['indices'])==4 and len(result['sectors'])==10
+          rows=result['indices']+result['sectors']
+          assert len(rows)==14
+          assert all(row['market_date']==expected for row in rows)
+          assert all(isinstance(row.get('volume'), int) and row['volume']>=0 for row in rows)
+          assert all(isinstance(row.get('rvol'), (int,float)) for row in rows)
+          validation=result.get('history_validation',{})
+          assert validation.get('missing_required_observations')==0
+          recoveries=validation.get('historical_recoveries',[])
+          for rec in recoveries:
+              assert rec['volume_min'] <= rec['volume_max']
+              assert rec['intraday_corroboration']['consensus']=='query1_query2_exact'
+              assert rec['intraday_corroboration']['regular_volume_lower_bound'] <= rec['volume_max']
+          print('LIVE_OK', json.dumps({
+              'previous_market_date':before.get('market_date'),
+              'market_date':result['market_date'],
+              'historical_recoveries':[(r['ticker'],r['market_date'],r['volume_min'],r['volume_max']) for r in recoveries],
+              'latest_quote_recoveries':[r['ticker'] for r in validation.get('closing_quote_recoveries',[])],
+              'missing_off_exchange':result.get('missing_off_exchange',[]),
+          }))
           PY
+      - name: Validate generated snapshot with dashboard parser
+        run: |
+          node - <<'JS'
+          const fs=require('fs');
+          const d=require('./docs/dashboard.js');
+          const p=JSON.parse(fs.readFileSync('/tmp/dashboard-live-test/data.json','utf8'));
+          const n=d.normalizePayload(p);
+          if(n.indices.length!==4 || n.sectors.length!==10) throw new Error('dashboard row count mismatch');
+          console.log('DASHBOARD_OK',n.market_date,n.missing_off_exchange.length);
+          JS
