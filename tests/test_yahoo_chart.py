@@ -116,7 +116,7 @@ class ChartTests(unittest.TestCase):
         with patch.object(h.yf,'download',return_value=pd.concat({'SPY':bad},axis=1)), \
              patch.object(h.yf,'Ticker',create=True) as ticker, \
              patch.object(h.time,'sleep'), \
-             patch.object(h,'download_chart_history',return_value=(recovered,provenance)):
+             patch.object(h,'download_chart_history',return_value=(recovered,provenance,[])):
             ticker.return_value.history.return_value=bad
             data=h.download_market_history(['SPY'],asof=ASOF)
             self.assertEqual(ticker.return_value.history.call_count,2)
