@@ -1,4 +1,4 @@
-name: Diagnose Yahoo interior gap volume
+name: Diagnose Yahoo volume endpoints
 on:
   push:
     branches: ['fix/yahoo-interior-gap-recovery-20260924']
@@ -14,48 +14,32 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - run: python -m pip install pandas exchange_calendars curl_cffi
-      - name: Cross-check previous snapshot RVOL against intraday volume
+      - run: python -m pip install pandas exchange_calendars curl_cffi yfinance
+      - name: Compare intraday aggregation volumes
         run: |
           python - <<'PY'
-          import json, math
-          import pandas as pd
-          import exchange_calendars as xcals
+          import json, pandas as pd, exchange_calendars as xcals
           from curl_cffi import requests
-          snap=json.load(open('docs/data.json',encoding='utf-8'))
-          rows={r['ticker']:r for r in snap['indices']+snap['sectors']}
-          cal=xcals.get_calendar('XNYS',start='2026-08-01',end='2026-09-24')
-          target=pd.Timestamp('2026-09-22')
-          o=cal.session_open(target); c=cal.session_close(target)
-          sessions=pd.DatetimeIndex(cal.sessions).tz_localize(None).normalize()
-          prior=sessions[sessions<target][-20:]
+          cal=xcals.get_calendar('XNYS',start='2026-09-21',end='2026-09-24')
+          d=pd.Timestamp('2026-09-22'); o=cal.session_open(d); c=cal.session_close(d)
           for symbol in ['DIA','URA','XLU','XLK','XLI','XBI','XLV','XLP']:
+            print('\nSYMBOL',symbol)
+            for interval in ['1m','2m','5m','15m','30m','60m','90m','1d']:
               url=f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}'
-              with requests.Session(impersonate='chrome') as s:
-                  daily=s.get(url,params={'range':'3mo','interval':'1d','includeAdjustedClose':'true','events':'div,splits'},timeout=20,allow_redirects=False)
-                  daily.raise_for_status(); dr=daily.json()['chart']['result'][0]
-                  q=dr['indicators']['quote'][0]; adj=dr['indicators']['adjclose'][0]['adjclose']; ts=dr['timestamp']
-                  idx=pd.to_datetime(ts,unit='s',utc=True).tz_convert('America/New_York').tz_localize(None).normalize()
-                  df=pd.DataFrame({'Close':adj,'Volume':q['volume']},index=idx)
-                  pvol=df.reindex(prior)['Volume']
-                  pclose=df.loc[prior[-1],'Close']
-                  intra=s.get(url,params={'period1':int((o-pd.Timedelta(minutes=2)).timestamp()),
-                                          'period2':int((c+pd.Timedelta(minutes=2)).timestamp()),
-                                          'interval':'1m','includePrePost':'false','events':'div,splits'},timeout=20,allow_redirects=False)
-                  intra.raise_for_status(); ir=intra.json()['chart']['result'][0]; iq=ir['indicators']['quote'][0]
-                  total=0; last=None; count=0
-                  for i,t in enumerate(ir.get('timestamp',[])):
-                      stamp=pd.Timestamp(t,unit='s',tz='UTC')
-                      if o <= stamp < c:
-                          v=iq['volume'][i]; cl=iq['close'][i]
-                          if v is not None: total+=v
-                          if cl is not None: last=cl
-                          count+=1
-                  calc_rvol=total/float(pvol.mean())
-                  calc_ret=(rows[symbol]['price']/float(pclose)-1)*100
-                  print(symbol,'snapshot_price',rows[symbol]['price'],'snapshot_return',rows[symbol]['return'],
-                        'calc_return',round(calc_ret,4),'snapshot_rvol',rows[symbol]['rvol'],
-                        'intraday_volume',total,'bars',count,'calc_rvol',round(calc_rvol,4),
-                        'last_1m',last,'prior_mean',round(float(pvol.mean()),2),
-                        'prior_missing',int(pvol.isna().sum()))
+              params={'period1':int((o-pd.Timedelta(minutes=2)).timestamp()),
+                      'period2':int((c+pd.Timedelta(minutes=2)).timestamp()),
+                      'interval':interval,'includePrePost':'false','events':'div,splits'}
+              try:
+                with requests.Session(impersonate='chrome') as s:
+                  r=s.get(url,params=params,timeout=20,allow_redirects=False); r.raise_for_status()
+                  result=r.json()['chart']['result'][0]; ts=result.get('timestamp',[]); q=result['indicators']['quote'][0]
+                  vals=[]
+                  for i,t in enumerate(ts):
+                    stamp=pd.Timestamp(t,unit='s',tz='UTC')
+                    if o <= stamp < c:
+                      vals.append((stamp,q['close'][i],q['volume'][i]))
+                  total=sum(v or 0 for _,_,v in vals)
+                  print(interval,'bars',len(vals),'sumvol',total,'last',vals[-1] if vals else None)
+              except Exception as e:
+                print(interval,'ERROR',type(e).__name__,e)
           PY
