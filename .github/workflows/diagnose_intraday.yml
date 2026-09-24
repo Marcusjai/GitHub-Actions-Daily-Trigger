@@ -1,4 +1,4 @@
-name: Diagnose Yahoo volume endpoints
+name: Diagnose alternate daily volume sources
 on:
   push:
     branches: ['fix/yahoo-interior-gap-recovery-20260924']
@@ -14,32 +14,28 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - run: python -m pip install pandas exchange_calendars curl_cffi yfinance
-      - name: Compare intraday aggregation volumes
+      - run: python -m pip install requests
+      - name: Compare Nasdaq and Stooq daily rows for Sep 22
         run: |
           python - <<'PY'
-          import json, pandas as pd, exchange_calendars as xcals
-          from curl_cffi import requests
-          cal=xcals.get_calendar('XNYS',start='2026-09-21',end='2026-09-24')
-          d=pd.Timestamp('2026-09-22'); o=cal.session_open(d); c=cal.session_close(d)
+          import json, requests
+          snap=json.load(open('docs/data.json',encoding='utf-8'))
+          rows={r['ticker']:r for r in snap['indices']+snap['sectors']}
+          headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36',
+                   'Accept':'application/json,text/plain,*/*','Referer':'https://www.nasdaq.com/'}
           for symbol in ['DIA','URA','XLU','XLK','XLI','XBI','XLV','XLP']:
-            print('\nSYMBOL',symbol)
-            for interval in ['1m','2m','5m','15m','30m','60m','90m','1d']:
-              url=f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}'
-              params={'period1':int((o-pd.Timedelta(minutes=2)).timestamp()),
-                      'period2':int((c+pd.Timedelta(minutes=2)).timestamp()),
-                      'interval':interval,'includePrePost':'false','events':'div,splits'}
+              print('\nSYMBOL',symbol,'SNAPSHOT_PRICE',rows[symbol]['price'])
               try:
-                with requests.Session(impersonate='chrome') as s:
-                  r=s.get(url,params=params,timeout=20,allow_redirects=False); r.raise_for_status()
-                  result=r.json()['chart']['result'][0]; ts=result.get('timestamp',[]); q=result['indicators']['quote'][0]
-                  vals=[]
-                  for i,t in enumerate(ts):
-                    stamp=pd.Timestamp(t,unit='s',tz='UTC')
-                    if o <= stamp < c:
-                      vals.append((stamp,q['close'][i],q['volume'][i]))
-                  total=sum(v or 0 for _,_,v in vals)
-                  print(interval,'bars',len(vals),'sumvol',total,'last',vals[-1] if vals else None)
-              except Exception as e:
-                print(interval,'ERROR',type(e).__name__,e)
+                  url=f'https://api.nasdaq.com/api/quote/{symbol}/historical'
+                  r=requests.get(url,params={'assetclass':'etf','fromdate':'09/22/2026','todate':'09/22/2026','limit':10},headers=headers,timeout=20)
+                  print('NASDAQ HTTP',r.status_code)
+                  if r.ok:
+                      obj=r.json(); print('NASDAQ',json.dumps(obj.get('data',{}).get('tradesTable',{}).get('rows',[]),ensure_ascii=False))
+                  else: print('NASDAQ BODY',r.text[:300])
+              except Exception as e: print('NASDAQ ERROR',type(e).__name__,e)
+              try:
+                  url=f'https://stooq.com/q/d/l/?s={symbol.lower()}.us&d1=20260922&d2=20260922&i=d'
+                  r=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=20)
+                  print('STOOQ HTTP',r.status_code,'BODY',repr(r.text[:300]))
+              except Exception as e: print('STOOQ ERROR',type(e).__name__,e)
           PY
