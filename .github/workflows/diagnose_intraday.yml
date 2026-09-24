@@ -1,4 +1,4 @@
-name: Diagnose alternate daily volume sources
+name: Live Yahoo recovery verification
 on:
   push:
     branches: ['fix/yahoo-interior-gap-recovery-20260924']
@@ -6,36 +6,44 @@ on:
 permissions:
   contents: read
 jobs:
-  diagnose:
+  verify-live:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - run: python -m pip install requests
-      - name: Compare Nasdaq and Stooq daily rows for Sep 22
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run all regression tests
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+          node --check docs/dashboard.js
+          node --test tests/dashboard.test.cjs
+      - name: Generate live snapshot without publishing
+        run: python generate_data.py
+      - name: Verify live snapshot integrity
         run: |
           python - <<'PY'
-          import json, requests
-          snap=json.load(open('docs/data.json',encoding='utf-8'))
-          rows={r['ticker']:r for r in snap['indices']+snap['sectors']}
-          headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36',
-                   'Accept':'application/json,text/plain,*/*','Referer':'https://www.nasdaq.com/'}
-          for symbol in ['DIA','URA','XLU','XLK','XLI','XBI','XLV','XLP']:
-              print('\nSYMBOL',symbol,'SNAPSHOT_PRICE',rows[symbol]['price'])
-              try:
-                  url=f'https://api.nasdaq.com/api/quote/{symbol}/historical'
-                  r=requests.get(url,params={'assetclass':'etf','fromdate':'09/22/2026','todate':'09/22/2026','limit':10},headers=headers,timeout=20)
-                  print('NASDAQ HTTP',r.status_code)
-                  if r.ok:
-                      obj=r.json(); print('NASDAQ',json.dumps(obj.get('data',{}).get('tradesTable',{}).get('rows',[]),ensure_ascii=False))
-                  else: print('NASDAQ BODY',r.text[:300])
-              except Exception as e: print('NASDAQ ERROR',type(e).__name__,e)
-              try:
-                  url=f'https://stooq.com/q/d/l/?s={symbol.lower()}.us&d1=20260922&d2=20260922&i=d'
-                  r=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=20)
-                  print('STOOQ HTTP',r.status_code,'BODY',repr(r.text[:300]))
-              except Exception as e: print('STOOQ ERROR',type(e).__name__,e)
+          import json, math
+          import pandas as pd
+          from scripts.yahoo_history import completed_sessions
+          p=json.load(open('docs/data.json',encoding='utf-8'))
+          expected=str(completed_sessions()[-1].date())
+          rows=p.get('indices',[])+p.get('sectors',[])
+          assert p.get('market_date')==expected,(p.get('market_date'),expected)
+          assert len(p.get('indices',[]))==4 and len(p.get('sectors',[]))==10
+          assert len(rows)==14 and len({r['ticker'] for r in rows})==14
+          for r in rows:
+              assert r.get('market_date')==expected
+              for k in ('price','return','alpha','rvol'):
+                  v=r.get(k); assert isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v),(r.get('ticker'),k,v)
+              assert r['price']>0 and r['rvol']>=0
+              assert isinstance(r.get('volume'),int) and r['volume']>=0
+          v=p.get('history_validation',{})
+          assert v.get('expected_market_date')==expected
+          assert v.get('missing_required_observations')==0
+          print('LIVE_OK',expected,'rows',len(rows),'recovered',v.get('recovered_tickers',[]),'historical',len(v.get('historical_recoveries',[])))
           PY
