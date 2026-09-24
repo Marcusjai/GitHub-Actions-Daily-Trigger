@@ -1,0 +1,45 @@
+name: Diagnose Yahoo intraday close
+on:
+  push:
+    branches: ['fix/yahoo-interior-gap-recovery-20260924']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pandas exchange_calendars curl_cffi
+      - name: Inspect Sep 22 regular-session intraday bars
+        run: |
+          python - <<'PY'
+          import json
+          import pandas as pd
+          import exchange_calendars as xcals
+          from curl_cffi import requests
+          d=pd.Timestamp('2026-09-22')
+          cal=xcals.get_calendar('XNYS',start='2026-09-22',end='2026-09-22')
+          o=cal.session_open(d); c=cal.session_close(d)
+          print('SESSION',o.isoformat(),c.isoformat())
+          for symbol in ['DIA','URA','XLU','XLK','XLI','XBI','XLV','XLP']:
+              url=f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}'
+              params={'period1':int((o-pd.Timedelta(minutes=2)).timestamp()),
+                      'period2':int((c+pd.Timedelta(minutes=2)).timestamp()),
+                      'interval':'1m','includePrePost':'false','events':'div,splits'}
+              with requests.Session(impersonate='chrome') as s:
+                  r=s.get(url,params=params,timeout=20,allow_redirects=False)
+                  print('\n',symbol,'HTTP',r.status_code)
+                  r.raise_for_status()
+                  result=r.json()['chart']['result'][0]
+                  print('META',json.dumps({k:result.get('meta',{}).get(k) for k in ['symbol','currency','exchangeTimezoneName','regularMarketTime','regularMarketPrice']}))
+                  ts=result.get('timestamp',[])
+                  q=result['indicators']['quote'][0]
+                  for i in range(max(0,len(ts)-6),len(ts)):
+                      print('BAR',pd.Timestamp(ts[i],unit='s',tz='UTC').isoformat(),
+                            {k:q.get(k,[None]*len(ts))[i] for k in ['open','high','low','close','volume']})
+          PY
