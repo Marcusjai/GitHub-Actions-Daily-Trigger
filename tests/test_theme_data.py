@@ -13,7 +13,7 @@ class ThemeDataTests(unittest.TestCase):
         self.last = str(self.dates[-1].date())
 
     def test_issuer_dates_and_values_must_match(self):
-        html = '<h1>ARTY iShares Future AI & Tech ETF</h1><p>NAV as of Sep 24, 2026 $$78.64</p><div>Shares Outstanding 53,950,000 as of Sep 24, 2026</div>'
+        html = '<title>iShares Future AI & Tech ETF | ARTY</title><h1>ARTY iShares Future AI & Tech ETF</h1><p>NAV as of Sep 24, 2026 $ $ 78.64</p><div>Shares Outstanding 53,950,000 as of Sep 24, 2026</div>'
         item = t.parse_issuer_html(html, 'ARTY')
         self.assertEqual((item['date'], item['nav'], item['shares']), ('2026-09-24', 78.64, 53950000))
         with self.assertRaisesRegex(ValueError, 'dates differ'):
@@ -46,7 +46,7 @@ class ThemeDataTests(unittest.TestCase):
         core = pd.concat({'SPY': pd.DataFrame({'Close':[100.0]*21,'Volume':[1000]*21},index=dates),
                           'SMH': pd.DataFrame({'Close':[100.0]*21,'Volume':[1000]*21},index=dates)},axis=1)
         result = Mock()
-        result.text = '<h1>ARTY</h1>NAV as of Sep 23, 2026 $78.64 Shares Outstanding 53,950,000 as of Sep 23, 2026'
+        result.text = '<title>iShares Future AI & Tech ETF | ARTY</title><h1>ARTY</h1>NAV as of Sep 23, 2026 $78.64 Shares Outstanding 53,950,000 as of Sep 23, 2026'
         with patch.object(t.yf, 'download', return_value=pd.DataFrame()), \
              patch.object(t.yf, 'Ticker', side_effect=RuntimeError('unavailable')), \
              patch.object(t.requests.Session, 'get', return_value=result):

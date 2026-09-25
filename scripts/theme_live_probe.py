@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 from scripts.theme_data import ISSUER_FUNDS, parse_issuer_html, THEMES, VisibleText
-from scripts.yahoo_history import completed_sessions
+from scripts.yahoo_history import completed_sessions, validated_window, _batch_frame
 import yfinance as yf
 
 for ticker, url in ISSUER_FUNDS.items():
@@ -33,7 +33,11 @@ try:
                        ignore_tz=True, progress=False, interval="1d", auto_adjust=True,
                        actions=False, prepost=False, repair=False, keepna=True, timeout=20)
     for ticker in tickers:
-        row = data[ticker].loc[str(dates[-1].date())]
-        print(f"{ticker}: Close={row.get('Close')} Volume={row.get('Volume')}")
+        try:
+            frame = validated_window(_batch_frame(data, ticker), ticker, dates)
+            row = frame.iloc[-1]
+            print(f"{ticker}: 21 valid sessions; Close={row.get('Close')} Volume={row.get('Volume')}")
+        except Exception as exc:
+            print(f"{ticker}: incomplete 21-session history: {exc}")
 except Exception as exc:
     print(f"Theme batch unavailable: {type(exc).__name__}: {exc}")

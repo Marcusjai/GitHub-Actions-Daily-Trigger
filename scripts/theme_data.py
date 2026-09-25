@@ -74,11 +74,12 @@ def parse_issuer_html(html: str, ticker: str) -> dict[str, Any]:
     reader.feed(html)
     reader.close()
     visible = re.sub(r"\s+", " ", " ".join(reader.parts))
-    if not re.search(rf"\b{ticker}\b", visible):
+    title = re.search(r"<title[^>]*>(.*?)</title>", html, re.I | re.S)
+    if not title or not re.search(rf"\b{ticker}\b", title.group(1)):
         raise ValueError("Issuer fund ticker not found")
     date = r"([A-Z][a-z]{2} \d{1,2},? \d{4})"
     nav = re.search(
-        rf"\bNAV as of {date}\s+\$+\s*([\d,]+(?:\.\d+)?)\b",
+        rf"\bNAV as of {date}\s+(?:\$\s*){{1,2}}([\d,]+(?:\.\d+)?)\b",
         visible, re.I,
     )
     shares = re.search(
@@ -176,6 +177,8 @@ def _metrics(frame: pd.DataFrame, spy: pd.DataFrame, ticker: str, date: str) -> 
     mean = float(volume.iloc[:-1].mean())
     if not all(math.isfinite(v) and v >= 0 for v in volume) or mean <= 0:
         raise ValueError(f"{ticker}: volume missing from 21-session window")
+    if latest_volume != int(latest_volume):
+        raise ValueError(f"{ticker}: latest daily volume must be an integer")
     return {
         "ticker": ticker, "name": STOCK_NAMES.get(ticker, ticker),
         "kind": ETF_TYPES.get(ticker, "股票"),
