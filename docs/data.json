@@ -1,9 +1,9 @@
 {
-  "last_updated": "2026-09-24 23:59:44 UTC",
+  "last_updated": "2026-09-25 12:12:28 UTC",
   "market_date": "2026-09-24",
   "data_quality": "partial",
   "missing_off_exchange": [
-    "XLE"
+    "DIA"
   ],
   "price_basis": "Yahoo adjusted daily Close; exact closing-quote recovery and prior validated historical recovery are explicitly recorded in provenance",
   "session_note": "Prices use the latest completed regular session after a 30-minute publication buffer; off-exchange snapshots may be partial.",
@@ -13,7 +13,7 @@
     "expected_market_date": "2026-09-24",
     "first_required_session": "2026-08-26",
     "required_sessions": 21,
-    "asof_utc": "2026-09-24T23:58:21.102795+00:00",
+    "asof_utc": "2026-09-25T12:11:07.503388+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [
       "DIA",
@@ -52,7 +52,7 @@
         },
         "close_vs_last_minute_relative_gap": 9.65015308277027e-05,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/DIA"
       },
       {
@@ -80,7 +80,7 @@
         },
         "close_vs_last_minute_relative_gap": 0.00011429788862458823,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/URA"
       },
       {
@@ -108,7 +108,7 @@
         },
         "close_vs_last_minute_relative_gap": 0.0001233277602046604,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLU"
       },
       {
@@ -136,7 +136,7 @@
         },
         "close_vs_last_minute_relative_gap": 5.097820942616157e-05,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLK"
       },
       {
@@ -164,7 +164,7 @@
         },
         "close_vs_last_minute_relative_gap": 0.00011742107319435172,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLI"
       },
       {
@@ -192,7 +192,7 @@
         },
         "close_vs_last_minute_relative_gap": 0.000308878537995354,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XBI"
       },
       {
@@ -220,7 +220,7 @@
         },
         "close_vs_last_minute_relative_gap": 5.8825690060560614e-05,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLV"
       },
       {
@@ -248,7 +248,7 @@
         },
         "close_vs_last_minute_relative_gap": 0.0002417613384183214,
         "source_method": "persisted_historical_recovery",
-        "source_snapshot_last_updated": "2026-09-24 00:58:56 UTC",
+        "source_snapshot_last_updated": "2026-09-24 23:59:44 UTC",
         "daily_source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLP"
       }
     ],
@@ -264,14 +264,14 @@
       "return": -0.08,
       "change": "-0.63",
       "alpha": 0.0,
-      "volume": 42694185,
-      "rvol": 1.0,
+      "volume": 43886300,
+      "rvol": 1.02,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 47.24,
+      "darkPool": 47.2,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-09-24",
       "darkPoolAsOf": "Sep 24, 2026",
@@ -287,14 +287,14 @@
       "return": -0.01,
       "change": "-0.11",
       "alpha": 0.07,
-      "volume": 28622284,
+      "volume": 28866800,
       "rvol": 0.88,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 36.13,
+      "darkPool": 36.11,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-09-24",
       "darkPoolAsOf": "Sep 24, 2026",
@@ -310,14 +310,14 @@
       "return": -0.09,
       "change": "-0.26",
       "alpha": -0.01,
-      "volume": 27088934,
-      "rvol": 1.26,
+      "volume": 27282800,
+      "rvol": 1.27,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 38.77,
+      "darkPool": 38.76,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-09-24",
       "darkPoolAsOf": "Sep 24, 2026",
@@ -333,24 +333,24 @@
       "return": -0.31,
       "change": "-1.62",
       "alpha": -0.23,
-      "volume": 2624253,
-      "rvol": 0.79,
+      "volume": 2761500,
+      "rvol": 0.83,
       "rvolExact": false,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        0.78668,
-        0.78708
+        0.82783,
+        0.82824
       ],
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 38.55,
-      "darkPoolStatus": "available",
-      "darkPoolDate": "2026-09-24",
-      "darkPoolAsOf": "Sep 24, 2026",
+      "darkPool": null,
+      "darkPoolStatus": "date_mismatch",
+      "darkPoolDate": "2026-09-25",
+      "darkPoolAsOf": "Sep 25, 2026",
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-dia/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": null
+      "darkPoolError": "Source date 2026-09-25; price date 2026-09-24"
     }
   ],
   "sectors": [
@@ -362,15 +362,15 @@
       "return": 0.63,
       "change": "+1.07",
       "alpha": 0.72,
-      "volume": 8783505,
-      "rvol": 1.18,
+      "volume": 8870900,
+      "rvol": 1.19,
       "rvolExact": false,
       "signal": "ACCUMULATION",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        1.17509,
-        1.17567
+        1.18679,
+        1.18737
       ],
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": 26.45,
@@ -389,18 +389,18 @@
       "return": 0.55,
       "change": "+0.85",
       "alpha": 0.63,
-      "volume": 13767331,
+      "volume": 13786800,
       "rvol": 1.68,
       "rvolExact": false,
       "signal": "ACCUMULATION",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        1.67867,
-        1.6795
+        1.68105,
+        1.68187
       ],
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 41.32,
+      "darkPool": 41.29,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-09-24",
       "darkPoolAsOf": "Sep 24, 2026",
@@ -416,20 +416,20 @@
       "return": 0.37,
       "change": "+0.23",
       "alpha": 0.45,
-      "volume": 37713159,
-      "rvol": 1.18,
+      "volume": 38157000,
+      "rvol": 1.19,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": null,
-      "darkPoolStatus": "unavailable",
-      "darkPoolDate": null,
-      "darkPoolAsOf": null,
+      "darkPool": 28.68,
+      "darkPoolStatus": "available",
+      "darkPoolDate": "2026-09-24",
+      "darkPoolAsOf": "Sep 24, 2026",
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xle/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific volume date not found"
+      "darkPoolError": null
     },
     {
       "ticker": "XLF",
@@ -439,7 +439,7 @@
       "return": -0.02,
       "change": "-0.01",
       "alpha": 0.06,
-      "volume": 28667342,
+      "volume": 28784400,
       "rvol": 0.85,
       "rvolExact": true,
       "signal": "NEUTRAL",
@@ -462,7 +462,7 @@
       "return": -0.15,
       "change": "-0.89",
       "alpha": -0.07,
-      "volume": 5612349,
+      "volume": 5628200,
       "rvol": 0.87,
       "rvolExact": true,
       "signal": "NEUTRAL",
@@ -485,15 +485,15 @@
       "return": -0.32,
       "change": "-0.63",
       "alpha": -0.24,
-      "volume": 6324299,
-      "rvol": 0.93,
+      "volume": 6356900,
+      "rvol": 0.94,
       "rvolExact": false,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        0.93231,
-        0.93277
+        0.93712,
+        0.93758
       ],
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": 41.21,
@@ -512,15 +512,15 @@
       "return": -0.75,
       "change": "-1.27",
       "alpha": -0.66,
-      "volume": 8522853,
-      "rvol": 1.12,
+      "volume": 8598900,
+      "rvol": 1.13,
       "rvolExact": false,
       "signal": "NEUTRAL",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        1.11605,
-        1.1166
+        1.12601,
+        1.12656
       ],
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": 35.25,
@@ -539,15 +539,15 @@
       "return": -0.89,
       "change": "-0.73",
       "alpha": -0.8,
-      "volume": 10608620,
+      "volume": 10609900,
       "rvol": 1.08,
       "rvolExact": false,
       "signal": "DISTRIBUTION",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        1.07886,
-        1.07939
+        1.07899,
+        1.07952
       ],
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": 32.23,
@@ -566,15 +566,15 @@
       "return": -0.98,
       "change": "-0.39",
       "alpha": -0.9,
-      "volume": 25543115,
+      "volume": 25586500,
       "rvol": 1.17,
       "rvolExact": false,
       "signal": "DISTRIBUTION",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        1.16934,
-        1.16991
+        1.17133,
+        1.1719
       ],
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": 34.35,
@@ -593,18 +593,18 @@
       "return": -2.69,
       "change": "-1.13",
       "alpha": -2.61,
-      "volume": 2286732,
+      "volume": 2287000,
       "rvol": 0.66,
       "rvolExact": false,
       "signal": "DISTRIBUTION",
       "market_date": "2026-09-24",
       "rvolLookback": 20,
       "rvolRange": [
-        0.6634,
-        0.66375
+        0.66348,
+        0.66382
       ],
       "priceSource": "yahoo_adjusted_daily_history",
-      "darkPool": 36.65,
+      "darkPool": 36.64,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-09-24",
       "darkPoolAsOf": "Sep 24, 2026",
@@ -612,5 +612,477 @@
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": null
     }
-  ]
+  ],
+  "asof": "2026-09-24",
+  "sessions": [
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24"
+  ],
+  "groups": [
+    {
+      "id": "AI",
+      "label": "AI / 人工智能",
+      "etfs": [
+        "ARTY",
+        "AIQ",
+        "SMH"
+      ],
+      "stocks": [
+        "NVDA",
+        "AMD",
+        "AVGO",
+        "PLTR",
+        "MSFT"
+      ],
+      "flow_proxy": "ARTY",
+      "instruments": [
+        {
+          "ticker": "ARTY",
+          "name": "ARTY",
+          "kind": "AI ETF",
+          "date": "2026-09-24",
+          "price": 78.54,
+          "volume": 448700,
+          "rvol": 1.18,
+          "returns": {
+            "1": -0.17,
+            "5": 4.59,
+            "20": 5.04
+          },
+          "vs_spy": {
+            "1": -0.08,
+            "5": 3.74,
+            "20": 4.65
+          },
+          "status": "partial",
+          "missing_close_dates": [
+            "2026-09-22"
+          ],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "AIQ",
+          "name": "AIQ",
+          "kind": "AI ETF",
+          "date": "2026-09-24",
+          "price": 65.98,
+          "volume": 802000,
+          "rvol": 0.89,
+          "returns": {
+            "1": -0.02,
+            "5": 2.5,
+            "20": 4.61
+          },
+          "vs_spy": {
+            "1": 0.07,
+            "5": 1.65,
+            "20": 4.22
+          },
+          "status": "partial",
+          "missing_close_dates": [
+            "2026-09-22"
+          ],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "SMH",
+          "name": "SMH",
+          "kind": "半導體 ETF",
+          "date": "2026-09-24",
+          "price": 600.52,
+          "volume": 5628200,
+          "rvol": 0.87,
+          "returns": {
+            "1": -0.15,
+            "5": 7.12,
+            "20": 8.05
+          },
+          "vs_spy": {
+            "1": -0.07,
+            "5": 6.27,
+            "20": 7.66
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 224.58,
+          "volume": 77305200,
+          "rvol": 0.59,
+          "returns": {
+            "1": -0.41,
+            "5": 2.39,
+            "20": 7.24
+          },
+          "vs_spy": {
+            "1": -0.33,
+            "5": 1.54,
+            "20": 6.84
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "AMD",
+          "name": "AMD",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 629.26,
+          "volume": 25259300,
+          "rvol": 1.2,
+          "returns": {
+            "1": 2.38,
+            "5": 15.44,
+            "20": 30.84
+          },
+          "vs_spy": {
+            "1": 2.47,
+            "5": 14.59,
+            "20": 30.45
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 350.36,
+          "volume": 20887100,
+          "rvol": 0.76,
+          "returns": {
+            "1": -1.3,
+            "5": 1.06,
+            "20": -1.29
+          },
+          "vs_spy": {
+            "1": -1.22,
+            "5": 0.21,
+            "20": -1.68
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 192.59,
+          "volume": 22639500,
+          "rvol": 0.82,
+          "returns": {
+            "1": 0.42,
+            "5": 9.28,
+            "20": 8.5
+          },
+          "vs_spy": {
+            "1": 0.5,
+            "5": 8.43,
+            "20": 8.11
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "MSFT",
+          "name": "Microsoft",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 497.93,
+          "volume": 16637200,
+          "rvol": 0.77,
+          "returns": {
+            "1": -0.53,
+            "5": 0.04,
+            "20": 0.31
+          },
+          "vs_spy": {
+            "1": -0.45,
+            "5": -0.81,
+            "20": -0.08
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        }
+      ]
+    },
+    {
+      "id": "BTC",
+      "label": "Bitcoin / 加密概念",
+      "etfs": [
+        "IBIT",
+        "FBTC",
+        "BKCH"
+      ],
+      "stocks": [
+        "COIN",
+        "MSTR",
+        "MARA",
+        "RIOT"
+      ],
+      "flow_proxy": "IBIT",
+      "instruments": [
+        {
+          "ticker": "IBIT",
+          "name": "IBIT",
+          "kind": "現貨 Bitcoin ETP",
+          "date": "2026-09-24",
+          "price": 47.81,
+          "volume": 37999200,
+          "rvol": 0.72,
+          "returns": {
+            "1": -0.15,
+            "5": 10.42,
+            "20": 7.53
+          },
+          "vs_spy": {
+            "1": -0.06,
+            "5": 9.57,
+            "20": 7.14
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "FBTC",
+          "name": "FBTC",
+          "kind": "現貨 Bitcoin ETP",
+          "date": "2026-09-24",
+          "price": 73.41,
+          "volume": 2449200,
+          "rvol": 0.61,
+          "returns": {
+            "1": -0.23,
+            "5": 10.34,
+            "20": 7.47
+          },
+          "vs_spy": {
+            "1": -0.15,
+            "5": 9.49,
+            "20": 7.07
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "BKCH",
+          "name": "BKCH",
+          "kind": "區塊鏈股票 ETF",
+          "date": "2026-09-24",
+          "price": 77.24,
+          "volume": 41400,
+          "rvol": 1.03,
+          "returns": {
+            "1": -0.97,
+            "5": 9.36,
+            "20": 9.35
+          },
+          "vs_spy": {
+            "1": -0.89,
+            "5": 8.51,
+            "20": 8.96
+          },
+          "status": "partial",
+          "missing_close_dates": [
+            "2026-09-22"
+          ],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "COIN",
+          "name": "Coinbase",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 199.21,
+          "volume": 7352300,
+          "rvol": 0.72,
+          "returns": {
+            "1": 0.55,
+            "5": 14.51,
+            "20": 9.59
+          },
+          "vs_spy": {
+            "1": 0.63,
+            "5": 13.66,
+            "20": 9.2
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "MSTR",
+          "name": "Strategy",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 161.61,
+          "volume": 16858700,
+          "rvol": 0.65,
+          "returns": {
+            "1": -0.36,
+            "5": 22.2,
+            "20": 31.19
+          },
+          "vs_spy": {
+            "1": -0.28,
+            "5": 21.35,
+            "20": 30.8
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "MARA",
+          "name": "MARA",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 12.92,
+          "volume": 40135600,
+          "rvol": 0.85,
+          "returns": {
+            "1": -3.22,
+            "5": 11.0,
+            "20": 15.15
+          },
+          "vs_spy": {
+            "1": -3.14,
+            "5": 10.15,
+            "20": 14.76
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        },
+        {
+          "ticker": "RIOT",
+          "name": "Riot Platforms",
+          "kind": "股票",
+          "date": "2026-09-24",
+          "price": 23.48,
+          "volume": 21966000,
+          "rvol": 1.4,
+          "returns": {
+            "1": -4.9,
+            "5": 7.31,
+            "20": 13.93
+          },
+          "vs_spy": {
+            "1": -4.82,
+            "5": 6.46,
+            "20": 13.53
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
+        }
+      ]
+    }
+  ],
+  "issuer_observations": {
+    "ARTY": [
+      {
+        "date": "2026-09-24",
+        "nav": 78.64,
+        "shares": 53950000,
+        "source": "https://www.ishares.com/us/products/297905/ishares-future-ai-tech-etf"
+      }
+    ],
+    "IBIT": [
+      {
+        "date": "2026-09-24",
+        "nav": 47.83,
+        "shares": 1407280000,
+        "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
+      }
+    ]
+  },
+  "issuer_flows": {
+    "ARTY": {
+      "5": {
+        "usd": null,
+        "status": "insufficient_history",
+        "observations": 1,
+        "required": 6,
+        "start": "2026-09-17",
+        "end": "2026-09-24"
+      },
+      "20": {
+        "usd": null,
+        "status": "insufficient_history",
+        "observations": 1,
+        "required": 21,
+        "start": "2026-08-26",
+        "end": "2026-09-24"
+      }
+    },
+    "IBIT": {
+      "5": {
+        "usd": null,
+        "status": "insufficient_history",
+        "observations": 1,
+        "required": 6,
+        "start": "2026-09-17",
+        "end": "2026-09-24"
+      },
+      "20": {
+        "usd": null,
+        "status": "insufficient_history",
+        "observations": 1,
+        "required": 21,
+        "start": "2026-08-26",
+        "end": "2026-09-24"
+      }
+    }
+  },
+  "flow_method": "sum over each session of (shares outstanding today - prior session) × issuer NAV today; all session observations required; possible splits rejected",
+  "rotation_method": "adjusted close 1/5/20-session return minus SPY return; price/volume signal, not investor net buying"
 }
