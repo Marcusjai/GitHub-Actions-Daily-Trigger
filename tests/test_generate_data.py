@@ -99,7 +99,7 @@ class MarketTests(unittest.TestCase):
             self.assertEqual(path.read_text(), 'old')
 
     def test_full_pipeline_partial_data(self):
-        with TemporaryDirectory() as folder, patch.object(g, 'download_market_history', return_value=prices()), patch.object(g, 'fetch_off_exchange', return_value={'darkPool':None, 'darkPoolStatus':'unavailable'}):
+        with TemporaryDirectory() as folder, patch.object(g, 'download_market_history', return_value=prices()), patch.object(g, 'fetch_off_exchange', return_value={'darkPool':None, 'darkPoolStatus':'unavailable'}), patch.object(g, 'build_theme_snapshot', return_value={'groups': [], 'issuer_flows': {}, 'issuer_observations': {}}):
             path = Path(folder)/'docs/data.json'
             result = g.generate_real_market_json(path)
             self.assertEqual(result['data_quality'], 'partial')

@@ -25,6 +25,7 @@ import pandas as pd
 import requests
 
 from scripts.yahoo_history import download_market_history
+from scripts.theme_data import build_theme_snapshot
 
 EXCHANGE_MAP = {
     "SPY": "nyse", "QQQ": "nasdaq", "IWM": "nyse", "DIA": "nyse",
@@ -565,6 +566,9 @@ def generate_real_market_json(
         "indices": indices,
         "sectors": sectors,
     }
+    # Theme observations are separate from the strict 14-ETF market feed.
+    # Unavailable theme symbols and issuer observations remain explicitly N/A.
+    payload.update(build_theme_snapshot(data, market_date, previous_snapshot))
     write_json_atomic(
         payload, output_path
     )

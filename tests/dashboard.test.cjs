@@ -88,3 +88,30 @@ test('missing Chart CDN does not stop prices or table rendering',async()=>{
   assert.match(b.elements.get('chart-note').textContent,/未載入/);
   assert.match(b.elements.get('broad-indices-grid').innerHTML,/SPY/);
 });
+test('theme windows show separate issuer issuance and price rotation',async()=>{
+  const p=fixture();
+  p.asof=p.market_date;
+  p.issuer_flows={ARTY:{'5':{status:'available',usd:10400000,start:'2026-09-11',end:p.market_date,observations:6,required:6},
+                          '20':{status:'insufficient_history',usd:null,observations:6,required:21}},
+                  IBIT:{'5':{status:'insufficient_history',usd:null,observations:1,required:6}}};
+  const row=(ticker,kind)=>({ticker,kind,date:p.market_date,returns:{'5':2,'20':5},vs_spy:{'5':1.2,'20':2.3}});
+  p.groups=[{id:'AI',label:'AI',flow_proxy:'ARTY',instruments:[row('ARTY','AI ETF'),row('NVDA','股票')]},
+            {id:'BTC',label:'Bitcoin',flow_proxy:'IBIT',instruments:[row('IBIT','現貨 Bitcoin ETP'),{ticker:'COIN',kind:'股票',date:p.market_date,status:'unavailable'}]}];
+  const b=browser(p);await vm.runInContext('loadDashboardData()',b.context);
+  assert.match(b.elements.get('theme-panels').innerHTML,/ARTY.*10.40 百萬美元/s);
+  assert.match(b.elements.get('theme-panels').innerHTML,/IBIT.*N\/A/s);
+  assert.match(b.elements.get('theme-panels').innerHTML,/COIN.*N\/A/s);
+  vm.runInContext("setThemePeriod('20')",b.context);
+  assert.doesNotMatch(b.elements.get('theme-panels').innerHTML,/10.40 百萬美元/);
+});
+test('dated issuer flow stays visible when one session behind and hides when older',async()=>{
+  const p=fixture();p.asof=p.market_date;p.sessions=['2026-09-16','2026-09-17',p.market_date];
+  p.issuer_flows={ARTY:{'5':{status:'available',usd:1000000,start:'2026-09-10',end:'2026-09-17',required:6,observations:6}},IBIT:{}};
+  const row=ticker=>({ticker,kind:'AI ETF',date:p.market_date,returns:{'5':1},vs_spy:{'5':1}});
+  p.groups=[{id:'AI',label:'AI',flow_proxy:'ARTY',instruments:[row('ARTY')]},
+            {id:'BTC',label:'BTC',flow_proxy:'IBIT',instruments:[row('IBIT')]}];
+  const b=browser(p);await vm.runInContext('loadDashboardData()',b.context);
+  assert.match(b.elements.get('theme-panels').innerHTML,/\+1\.00 百萬美元/);
+  p.issuer_flows.ARTY['5'].end='2026-09-10';await vm.runInContext('loadDashboardData()',b.context);
+  assert.doesNotMatch(b.elements.get('theme-panels').innerHTML,/\+1\.00 百萬美元/);
+});

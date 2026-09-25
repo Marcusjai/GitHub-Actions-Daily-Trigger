@@ -7,6 +7,7 @@ let currentData = null;
 let sortState = {col: 'alpha', dir: 'desc'};
 let alphaChartInstance = null;
 let loading = false;
+let themePeriod = '5';
 let toastTimer;
 const finite = value => typeof value === 'number' && Number.isFinite(value);
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -51,6 +52,10 @@ function normalizePayload(input) {
   const indices = normalizeGroup(input.indices, INDEX_TICKERS);
   const sectors = normalizeGroup(input.sectors, SECTOR_TICKERS);
   const missing = [...indices, ...sectors].filter(r => r.darkPool === null).map(r => r.ticker);
+  if (input.groups !== undefined && (!Array.isArray(input.groups) ||
+      input.asof !== input.market_date || !input.issuer_flows || typeof input.issuer_flows !== 'object')) {
+    throw new Error('主題資料日期或結構不正確。');
+  }
   return {...input, indices, sectors, missing_off_exchange: missing,
     data_quality: missing.length ? 'partial' : 'available_not_independently_verified'};
 }
@@ -86,8 +91,77 @@ function renderUI() {
     <div><div class="flex justify-between text-xs mb-1"><a class="text-sky-400 underline" href="${getChartExchangeUrl(row.ticker)}" target="_blank" rel="noopener noreferrer">${row.ticker} ↗</a><span>${fmt(row.darkPool, '%')}</span></div>
     <div class="bg-slate-800 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width:${row.darkPool}%"></div></div></div>`).join('') : '<p class="text-sm text-slate-400">N/A — 無同日場外來源資料</p>';
   renderTable();
+  renderThemes();
   renderChart();
   if (globalThis.lucide) globalThis.lucide.createIcons();
+}
+function setThemePeriod(period) {
+  if (!['5','20'].includes(period)) return;
+  themePeriod = period;
+  renderThemes();
+}
+function flowText(data, ticker) {
+  const item = data.issuer_flows?.[ticker]?.[themePeriod];
+  const freshDates = Array.isArray(data.sessions) ? data.sessions.slice(-3) : [data.market_date];
+  if (item?.status !== 'available' || !finite(item.usd) ||
+      !freshDates.includes(item.end) || item.required !== Number(themePeriod) + 1 ||
+      item.observations !== item.required) {
+    const have = Number.isInteger(item?.observations) ? `${item.observations}/${Number(themePeriod)+1} 日` : '來源未取得';
+    return `N/A · 有效記錄 ${have}`;
+  }
+  const millions = item.usd / 1e6;
+  return `${millions >= 0 ? '+' : ''}${millions.toFixed(2)} 百萬美元 · ${item.start} → ${item.end}`;
+}
+function themeRows(instruments, period, type) {
+  const rows = instruments.filter(r => (type === 'etf') === (r.kind !== '股票'));
+  return rows.map(row => {
+    const ready = row.date === currentData.market_date && finite(row.returns?.[period]) && finite(row.vs_spy?.[period]);
+    const rel = ready ? row.vs_spy[period] : null;
+    const color = ready ? (rel >= 0 ? 'text-emerald-400' : 'text-rose-400') : 'text-slate-500';
+    return `<div class="grid grid-cols-4 gap-2 py-2 border-b border-gray-800 text-xs">
+      <div><b class="text-white">${escapeHtml(row.ticker)}</b><span class="text-slate-500 ml-2">${escapeHtml(row.kind)}</span></div>
+      <div class="text-right">${fmt(ready ? row.returns[period] : null, '%', true)}</div>
+      <div class="text-right ${color}">${fmt(rel, ' pp', true)}</div>
+      <div class="text-right text-amber-300">${fmt(row.date === currentData.market_date ? row.rvol : null, 'x')}</div>
+    </div>`;
+  }).join('');
+}
+function renderThemes() {
+  const container = element('theme-panels');
+  if (!container) return;
+  for (const period of ['5','20']) {
+    const button = element(`period-${period}`);
+    if (button) {
+      button.setAttribute?.('aria-pressed', String(themePeriod === period));
+      button.className = `${themePeriod === period ? 'bg-sky-700 text-white' : 'bg-slate-800 text-slate-300'} px-3 py-2 rounded-lg text-xs`;
+    }
+  }
+  if (!currentData || !Array.isArray(currentData.groups) || currentData.groups.length !== 2) {
+    container.textContent = '主題資料尚未生成，請等候下次每日更新。';
+    return;
+  }
+  container.innerHTML = currentData.groups.map(group => {
+    if (!['AI','BTC'].includes(group.id) || !Array.isArray(group.instruments) ||
+        !['ARTY','IBIT'].includes(group.flow_proxy)) return '';
+    const instruments = group.instruments;
+    const available = instruments.filter(r => r.date === currentData.market_date && finite(r.vs_spy?.[themePeriod]));
+    const stronger = available.filter(r => r.vs_spy[themePeriod] > 0).length;
+    const url = group.flow_proxy === 'ARTY'
+      ? 'https://www.ishares.com/us/products/297905/ishares-future-ai-tech-etf'
+      : 'https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf';
+    return `<article class="glass-card border border-gray-800 rounded-xl p-5">
+      <div class="flex justify-between items-baseline"><h3 class="text-base font-bold">${escapeHtml(group.label)}</h3>
+        <span class="text-xs text-slate-400">相對 SPY 轉強 ${stronger}/${available.length} 可用</span></div>
+      <div class="bg-slate-900 rounded-lg p-3 mt-4">
+        <div class="text-xs text-slate-400"><a class="underline text-sky-400" href="${url}" target="_blank" rel="noopener noreferrer">${group.flow_proxy} ↗</a> · ${themePeriod} 日 ETF 淨發行估算</div>
+        <div class="text-lg font-semibold mt-1">${escapeHtml(flowText(currentData, group.flow_proxy))}</div>
+      </div>
+      <div class="grid grid-cols-4 gap-2 mt-4 text-xs text-slate-500"><span>ETF / ETP</span><span class="text-right">${themePeriod} 日回報</span><span class="text-right">vs SPY</span><span class="text-right">20D RVOL</span></div>
+      ${themeRows(instruments, themePeriod, 'etf')}
+      <div class="grid grid-cols-4 gap-2 mt-4 text-xs text-slate-500"><span>相關股票</span><span class="text-right">${themePeriod} 日回報</span><span class="text-right">vs SPY</span><span class="text-right">20D RVOL</span></div>
+      ${themeRows(instruments, themePeriod, 'stock')}
+    </article>`;
+  }).join('');
 }
 function renderTable() {
   if (!currentData) return;

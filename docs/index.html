@@ -24,7 +24,7 @@
     <header class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-800 pb-5 gap-4">
       <div>
         <h1 class="text-2xl font-bold text-white tracking-tight">US Market Institutional Pulse</h1>
-        <p class="text-xs text-slate-400 mt-2">每日量價、相對 SPY 表現、20D RVOL 與 ChartExchange 場外成交比例</p>
+        <p class="text-xs text-slate-400 mt-2">板塊輪動（1 / 5 / 20 交易日）與指定 ETF 淨發行估算</p>
         <span id="data-source-badge" class="inline-block mt-2 text-xs border border-gray-700 px-2 py-1 rounded-full" role="status">載入中…</span>
       </div>
       <div class="flex flex-wrap items-center gap-3">
@@ -63,6 +63,20 @@
       <h2 class="text-sm font-semibold text-slate-400 mb-3">基準 ETF 每日動態</h2>
       <div id="broad-indices-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
+    <section class="mt-8" aria-label="AI 和 Bitcoin 主題觀察">
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+        <div>
+          <h2 class="text-lg font-bold">AI 與 Bitcoin：一段時間嘅動向</h2>
+          <p class="text-xs text-slate-400 mt-1">相對強度係價量線索；ETF 淨發行只計指定基金，兩者分開顯示。</p>
+        </div>
+        <div class="flex gap-2" role="group" aria-label="選擇交易日窗口">
+          <button id="period-5" onclick="setThemePeriod('5')" class="bg-sky-700 text-white px-3 py-2 rounded-lg text-xs" aria-pressed="true">5 交易日</button>
+          <button id="period-20" onclick="setThemePeriod('20')" class="bg-slate-800 text-slate-300 px-3 py-2 rounded-lg text-xs" aria-pressed="false">20 交易日</button>
+        </div>
+      </div>
+      <div id="theme-panels" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+      <p class="text-xs text-slate-500 mt-3">ETF 淨發行估算 = 每日（發行股數變化 × 當日發行商 NAV）加總；須有窗口內每一交易日嘅有效資料。ARTY 代表一隻 AI ETF，IBIT 代表一隻現貨 Bitcoin ETP，唔代表成個主題或所有機構持倉。股票冇 ETF 發行股數，故只顯示輪動線索。期間回報只需真實起點及終點價；20D RVOL 如歷史成交量有缺口會顯示 N/A。新發行商資料會逐日累積。</p>
+    </section>
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
       <div class="lg:col-span-2 glass-card border border-gray-800 rounded-xl p-5">
         <h2 class="text-base font-bold">板塊超額回報 (Relative Return vs SPY)</h2>
@@ -79,7 +93,7 @@
     </section>
     <section class="mt-8 glass-card border border-gray-800 rounded-xl overflow-hidden">
       <div class="p-5 border-b border-gray-800 flex flex-col md:flex-row justify-between gap-4">
-        <div><h2 class="text-lg font-bold">板塊與主題 ETF 數據總覽</h2><p class="text-xs text-slate-400">點擊欄位標題排序；N/A 永遠排最後。</p></div>
+        <div><h2 class="text-lg font-bold">板塊 ETF 數據總覽</h2><p class="text-xs text-slate-400">點擊欄位標題排序；N/A 永遠排最後。</p></div>
         <div class="flex gap-3 flex-wrap">
           <input id="search-input" type="search" placeholder="搜尋 ETF 或名稱…" aria-label="搜尋 ETF" oninput="renderTable()" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs" />
           <button onclick="copySummaryMarkdown()" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs">複製簡報文字</button>
