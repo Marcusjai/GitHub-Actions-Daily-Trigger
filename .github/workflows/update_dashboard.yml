@@ -42,6 +42,9 @@ jobs:
         run: |
           node --check docs/dashboard.js
           node --test tests/dashboard.test.cjs
+      - name: Branch-only issuer and theme data probe
+        if: startsWith(github.ref, 'refs/heads/fix/theme-flow-')
+        run: python -m scripts.theme_live_probe
 
   scrape-and-deploy:
     needs: validate
