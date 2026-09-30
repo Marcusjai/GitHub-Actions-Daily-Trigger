@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-30 01:41:07 UTC",
+  "last_updated": "2026-09-30 01:51:25 UTC",
   "market_date": "2026-09-29",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -16,7 +16,7 @@
     "expected_market_date": "2026-09-29",
     "first_required_session": "2026-08-31",
     "required_sessions": 21,
-    "asof_utc": "2026-09-30T01:40:30.596782+00:00",
+    "asof_utc": "2026-09-30T01:51:19.951633+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -211,13 +211,13 @@
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
-      "darkPoolStatus": "unavailable",
+      "darkPoolStatus": "blocked",
       "darkPoolDate": null,
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xbi/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific volume date not found",
-      "darkPoolAttempts": 3
+      "darkPoolError": "ChartExchange requires human verification; unattended access needs its supported API.",
+      "darkPoolAttempts": 1
     },
     {
       "ticker": "XLK",
@@ -283,13 +283,13 @@
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
-      "darkPoolStatus": "unavailable",
+      "darkPoolStatus": "blocked",
       "darkPoolDate": null,
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific volume date not found",
-      "darkPoolAttempts": 3
+      "darkPoolError": "ChartExchange requires human verification; unattended access needs its supported API.",
+      "darkPoolAttempts": 1
     },
     {
       "ticker": "XLF",
@@ -331,13 +331,13 @@
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
-      "darkPoolStatus": "unavailable",
+      "darkPoolStatus": "blocked",
       "darkPoolDate": null,
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific volume date not found",
-      "darkPoolAttempts": 3
+      "darkPoolError": "ChartExchange requires human verification; unattended access needs its supported API.",
+      "darkPoolAttempts": 1
     },
     {
       "ticker": "XLE",
@@ -355,13 +355,13 @@
       "rvolLookback": 20,
       "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
-      "darkPoolStatus": "unavailable",
+      "darkPoolStatus": "blocked",
       "darkPoolDate": null,
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xle/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific volume date not found",
-      "darkPoolAttempts": 3
+      "darkPoolError": "ChartExchange requires human verification; unattended access needs its supported API.",
+      "darkPoolAttempts": 1
     }
   ],
   "asof": "2026-09-29",
@@ -805,6 +805,12 @@
         "nav": 47.28,
         "shares": 1412720000,
         "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
+      },
+      {
+        "date": "2026-09-29",
+        "nav": 47.3,
+        "shares": 1413880000,
+        "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
       }
     ]
   },
@@ -831,18 +837,18 @@
       "5": {
         "usd": null,
         "status": "insufficient_history",
-        "observations": 2,
+        "observations": 3,
         "required": 6,
-        "start": "2026-09-21",
-        "end": "2026-09-28"
+        "start": "2026-09-22",
+        "end": "2026-09-29"
       },
       "20": {
         "usd": null,
         "status": "insufficient_history",
-        "observations": 2,
+        "observations": 3,
         "required": 21,
-        "start": "2026-08-28",
-        "end": "2026-09-28"
+        "start": "2026-08-31",
+        "end": "2026-09-29"
       }
     }
   },
