@@ -1,6 +1,6 @@
 """Decide whether scheduled recovery is needed using the actual NYSE calendar.
 
-Missing optional sources request another bounded scheduled attempt. They never
+Temporary missing sources request another bounded scheduled attempt. They never
 turn a current, validated core snapshot into invented or forward-filled data.
 """
 from __future__ import annotations
@@ -52,7 +52,10 @@ def inspect_snapshot(payload, asof=None):
         if (row.get('darkPoolStatus') != 'available' or row.get('darkPoolDate') != expected
                 or row.get('darkPoolMetric') != 'off_exchange_day_pct'
                 or not _finite(row.get('darkPool')) or not 0 <= row['darkPool'] <= 100):
-            reasons.append(f"{row['ticker']}: same-session off-exchange source still missing.")
+            # Another same-session run cannot solve an explicit human-verification
+            # restriction. A new trading session always refreshes the whole feed.
+            if row.get('darkPoolStatus') != 'blocked':
+                reasons.append(f"{row['ticker']}: same-session off-exchange source still missing.")
     groups = payload.get('groups')
     if (payload.get('asof') != expected or not isinstance(groups, list)
             or not all(isinstance(group, dict) for group in groups)
@@ -111,7 +114,7 @@ def main():
             reasons.append('Public Pages does not serve the current source snapshot.')
             refresh = True
     message = f"Core current={current}; refresh={refresh}. " + (
-        ' '.join(reasons) if reasons else 'All required source observations are current.'
+        ' '.join(reasons) if reasons else 'Core and theme histories are current; any access-blocked sources remain N/A.'
     )
     print(message, flush=True)
     if args.github_output:

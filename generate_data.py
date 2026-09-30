@@ -80,12 +80,16 @@ class VisibleText(HTMLParser):
             self.parts.append(data)
 
 
-def parse_off_exchange(html: str, ticker: str) -> tuple[float, str, str]:
-    """Accept only a dated, ticker-specific daily summary; never guess a column."""
+def visible_text(html: str) -> str:
     parser = VisibleText()
     parser.feed(html)
     parser.close()
-    text = re.sub(r"\s+", " ", " ".join(parser.parts)).strip()
+    return re.sub(r"\s+", " ", " ".join(parser.parts)).strip()
+
+
+def parse_off_exchange(html: str, ticker: str) -> tuple[float, str, str]:
+    """Accept only a dated, ticker-specific daily summary; never guess a column."""
+    text = visible_text(html)
     date_pattern = r"[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}"
     headings = list(re.finditer(
         rf"\b{re.escape(ticker)}\s+Volume\s+({date_pattern})"
@@ -153,6 +157,14 @@ def fetch_off_exchange(
             timeout = (5, 15) if remaining is None else (min(5, remaining / 2), min(15, remaining / 2))
             response = session.get(url, timeout=timeout)
             response.raise_for_status()
+            visible = visible_text(response.text)
+            if re.search(r'please verify you are not a robot', visible, re.I):
+                result.update(
+                    darkPoolStatus='blocked',
+                    darkPoolError='ChartExchange requires human verification; unattended access needs its supported API.',
+                )
+                print(f'::warning::{ticker}: ChartExchange verification page; no retries against this access restriction.', flush=True)
+                break
             value, source_date, stamp = parse_off_exchange(response.text, ticker)
             result.update(darkPoolDate=source_date, darkPoolAsOf=stamp)
             if source_date != market_date:
@@ -169,14 +181,15 @@ def fetch_off_exchange(
             result['darkPoolError'] = str(exc)
             retryable = isinstance(exc, (requests.Timeout, requests.ConnectionError))
             if isinstance(exc, requests.HTTPError):
+                if exc.response is not None and exc.response.status_code in {401, 403}:
+                    result['darkPoolStatus'] = 'blocked'
                 retryable = (
                     exc.response is not None
                     and exc.response.status_code in TRANSIENT_HTTP_STATUSES
                 )
             elif isinstance(exc, ValueError):
                 retryable = str(exc) in TRANSIENT_PARSE_ERRORS
-                reader = VisibleText(); reader.feed(response.text); reader.close()
-                visible = re.sub(r'\s+', ' ', ' '.join(reader.parts)).strip()
+                visible = visible_text(response.text)
                 title = re.search(r'<title[^>]*>(.*?)</title>', response.text, re.I | re.S)
                 print(f'{ticker}: off-exchange response diagnostic: ' + json.dumps({
                     'http_status': response.status_code,

@@ -46,7 +46,8 @@ function normalizePayload(input) {
         row.darkPoolDate === input.market_date;
       return {...row, name: String(row.name ?? row.ticker), darkPool: offAvailable ? row.darkPool : null,
         darkPoolStatus: offAvailable ? 'available' : (row.darkPoolStatus === 'date_mismatch' ||
-          (row.darkPoolDate && row.darkPoolDate !== input.market_date) ? 'date_mismatch' : 'unavailable')};
+          (row.darkPoolDate && row.darkPoolDate !== input.market_date) ? 'date_mismatch' :
+          row.darkPoolStatus === 'blocked' ? 'blocked' : 'unavailable')};
     });
   }
   const indices = normalizeGroup(input.indices, INDEX_TICKERS);
@@ -61,7 +62,10 @@ function normalizePayload(input) {
 }
 const element = id => document.getElementById(id);
 function text(id, value) { const e = element(id); if (e) e.textContent = value; }
-function missingLabel(row) { return row.darkPoolStatus === 'date_mismatch' ? '來源日期不符' : '来源未取得'; }
+function missingLabel(row) {
+  return row.darkPoolStatus === 'date_mismatch' ? '來源日期不符' :
+    row.darkPoolStatus === 'blocked' ? '來源限制自動讀取' : '來源未取得';
+}
 function renderUI() {
   if (!currentData) return;
   const sectors = currentData.sectors;

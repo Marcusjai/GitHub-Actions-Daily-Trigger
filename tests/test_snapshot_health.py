@@ -55,6 +55,12 @@ class SnapshotHealthTests(unittest.TestCase):
         self.assertTrue(current)
         self.assertEqual(len(reasons), 2)
 
+    def test_known_verification_block_does_not_repeat_scraping_a_current_session(self):
+        payload = snapshot()
+        payload['sectors'][0].update(darkPool=None, darkPoolStatus='blocked')
+        self.assertEqual(health.inspect_snapshot(payload, ASOF), (True, []))
+        self.assertFalse(health.inspect_snapshot(payload, '2026-10-01T00:00:00Z')[0])
+
     def test_wrong_core_date_duplicate_ticker_and_nan_fail_publication_gate(self):
         for edit in ('date', 'duplicate', 'nan', 'history'):
             payload = snapshot()

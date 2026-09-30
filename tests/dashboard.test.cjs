@@ -36,6 +36,15 @@ test('null percentages become partial data', ()=>{
   const p=fixture();p.sectors[0].darkPool=null;
   const n=d.normalizePayload(p); assert.equal(n.data_quality,'partial');assert.deepEqual(n.missing_off_exchange,['SMH']);
 });
+test('verification-blocked source stays N/A with a clear explanation', async()=>{
+  const p=fixture();p.sectors[0].darkPoolStatus='blocked';p.sectors[0].darkPool=null;
+  const n=d.normalizePayload(p);
+  assert.equal(n.sectors[0].darkPoolStatus,'blocked');
+  assert.equal(n.sectors[0].darkPool,null);
+  const b=browser(p);await vm.runInContext('loadDashboardData()',b.context);
+  assert.match(b.elements.get('sector-table-body').innerHTML,/來源限制自動讀取/);
+  assert.match(b.elements.get('data-source-badge').textContent,/場外 13\/14/);
+});
 test('wrong dates are excluded even when a percentage is supplied', ()=>{
   const p=fixture();p.sectors[0].darkPoolDate='2026-09-17';
   assert.equal(d.normalizePayload(p).sectors[0].darkPool,null);

@@ -126,6 +126,18 @@ class MarketTests(unittest.TestCase):
         self.assertEqual(session.get.call_count, 1)
         sleep.assert_not_called()
         self.assertIsNone(item['darkPool'])
+        self.assertEqual(item['darkPoolStatus'], 'blocked')
+
+    def test_verification_page_with_http_200_is_blocked_without_retry(self):
+        session = Mock()
+        session.get.return_value.text = '<p>Please verify you are not a <b>robot</b>.</p><a>Verify</a>'
+        with patch.object(g.time, 'sleep') as sleep:
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
+        self.assertEqual(session.get.call_count, 1)
+        sleep.assert_not_called()
+        self.assertEqual(item['darkPoolStatus'], 'blocked')
+        self.assertIsNone(item['darkPool'])
+        self.assertIn('supported API', item['darkPoolError'])
 
     def test_off_exchange_outage_cannot_exhaust_production_job_time(self):
         session = Mock()
