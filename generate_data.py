@@ -16,6 +16,7 @@ import os
 import re
 import sys
 import tempfile
+import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -48,6 +49,13 @@ WATCHLIST = {
     "XLE": {"name": "傳統能源 ETF", "cat": "CYCLICAL"},
     "XLV": {"name": "醫療保健 ETF", "cat": "DEFENSIVE"},
     "XLP": {"name": "必選消費 ETF", "cat": "DEFENSIVE"},
+}
+OFF_EXCHANGE_RETRY_DELAYS = (2, 6)
+TRANSIENT_HTTP_STATUSES = {408, 429, 500, 502, 503, 504}
+TRANSIENT_PARSE_ERRORS = {
+    'Ticker-specific volume date not found',
+    'Ticker-specific off-exchange summary not found',
+    'Unambiguous daily off-exchange percentage not found',
 }
 
 
@@ -132,31 +140,42 @@ def fetch_off_exchange(
         "darkPoolMetric": "off_exchange_day_pct",
         "darkPoolError": None,
     }
-    try:
-        response = session.get(url, timeout=(5, 15))
-        response.raise_for_status()
-        value, source_date, stamp = parse_off_exchange(
-            response.text, ticker
-        )
-        result.update(
-            darkPoolDate=source_date,
-            darkPoolAsOf=stamp,
-        )
-        if source_date != market_date:
-            result.update(
-                darkPoolStatus="date_mismatch",
-                darkPoolError=(
-                    f"Source date {source_date}; "
-                    f"price date {market_date}"
-                ),
+    for attempt in range(len(OFF_EXCHANGE_RETRY_DELAYS) + 1):
+        result['darkPoolAttempts'] = attempt + 1
+        try:
+            response = session.get(url, timeout=(5, 15))
+            response.raise_for_status()
+            value, source_date, stamp = parse_off_exchange(response.text, ticker)
+            result.update(darkPoolDate=source_date, darkPoolAsOf=stamp)
+            if source_date != market_date:
+                result.update(
+                    darkPoolStatus='date_mismatch',
+                    darkPoolError=f'Source date {source_date}; price date {market_date}',
+                )
+            else:
+                result.update(
+                    darkPool=round(value, 2), darkPoolStatus='available', darkPoolError=None,
+                )
+            break
+        except (requests.RequestException, ValueError) as exc:
+            result['darkPoolError'] = str(exc)
+            retryable = isinstance(exc, (requests.Timeout, requests.ConnectionError))
+            if isinstance(exc, requests.HTTPError):
+                retryable = (
+                    exc.response is not None
+                    and exc.response.status_code in TRANSIENT_HTTP_STATUSES
+                )
+            elif isinstance(exc, ValueError):
+                retryable = str(exc) in TRANSIENT_PARSE_ERRORS
+            if not retryable or attempt == len(OFF_EXCHANGE_RETRY_DELAYS):
+                break
+            delay = OFF_EXCHANGE_RETRY_DELAYS[attempt]
+            print(
+                f'{ticker}: off-exchange request incomplete; retry {attempt + 1}/'
+                f'{len(OFF_EXCHANGE_RETRY_DELAYS)} after {delay}s ({exc})',
+                flush=True,
             )
-        else:
-            result.update(
-                darkPool=round(value, 2),
-                darkPoolStatus="available",
-            )
-    except (requests.RequestException, ValueError) as exc:
-        result["darkPoolError"] = str(exc)
+            time.sleep(delay)
     return result
 
 

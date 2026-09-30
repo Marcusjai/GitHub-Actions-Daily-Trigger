@@ -2,7 +2,11 @@ name: Update Daily Market Data
 
 on:
   schedule:
+    # UTC Mon-Fri becomes HKT Tue-Sat. Keep 05:30 and retry separately;
+    # GitHub scheduled events can be delayed or dropped under high load.
     - cron: '30 21 * * 1-5'
+    - cron: '17 22,23 * * 1-5'
+    - cron: '17 0 * * 2-6'
   workflow_dispatch:
   push:
     branches: [main, 'fix/**']
@@ -28,8 +32,15 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 6
+    outputs:
+      refresh: ${{ steps.freshness.outputs.refresh }}
+      source_sha: ${{ steps.freshness.outputs.source_sha }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          # A delayed scheduled event may refer to an older snapshot commit.
+          # Serialize production runs, then inspect the current main branch.
+          ref: ${{ github.event_name == 'schedule' && 'main' || github.sha }}
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
@@ -42,18 +53,27 @@ jobs:
         run: |
           node --check docs/dashboard.js
           node --test tests/dashboard.test.cjs
+      - name: Check whether this session still needs recovery
+        id: freshness
+        env:
+          PAGES_URL: https://marcusjai.github.io/GitHub-Actions-Daily-Trigger/
+        run: |
+          python -m scripts.snapshot_health --github-output
+          echo "source_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
   scrape-and-deploy:
     needs: validate
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.validate.outputs.refresh == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: write
       pages: write
     steps:
-      - name: Checkout tested commit
+      - name: Checkout validated production source
         uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.validate.outputs.source_sha }}
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
@@ -62,6 +82,8 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Run Real Data Scraper Engine
         run: python generate_data.py
+      - name: Reject stale or inconsistent market snapshots
+        run: python -m scripts.snapshot_health --require-current
       - name: Commit and push validated data.json
         shell: bash
         run: |

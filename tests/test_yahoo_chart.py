@@ -123,5 +123,19 @@ class ChartTests(unittest.TestCase):
             self.assertEqual(data['SPY']['Close'].iloc[-1],102.5)
             self.assertEqual(data.attrs['history_validation']['closing_quote_recoveries'][0]['ticker'],'SPY')
 
+    def test_optional_theme_chart_keeps_historical_gap_without_reusing_snapshot(self):
+        from scripts.yahoo_chart import download_chart_history
+        payload = fixture()
+        payload['chart']['result'][0]['indicators']['adjclose'][0]['adjclose'][3] = None
+        with patch('curl_cffi.requests.Session') as session:
+            session.return_value.__enter__.return_value.get.return_value.json.return_value = payload
+            data, latest, historical = download_chart_history(
+                'SPY', h.completed_sessions(ASOF), CLOSE, recover_historical=False
+            )
+        self.assertTrue(pd.isna(data['Close'].iloc[3]))
+        self.assertEqual(data['Close'].iloc[-1], 102.5)
+        self.assertEqual(latest['market_date'], '2026-09-21')
+        self.assertEqual(historical, [])
+
 
 if __name__=='__main__':unittest.main()

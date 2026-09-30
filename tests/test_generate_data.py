@@ -92,6 +92,40 @@ class MarketTests(unittest.TestCase):
         item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
         self.assertIsNone(item['darkPool']); self.assertEqual(item['darkPoolStatus'], 'unavailable')
 
+    def test_temporary_http_failure_retries_and_recovers_dated_source(self):
+        response = requests.Response(); response.status_code = 504
+        recovered = Mock(); recovered.text = html()
+        session = Mock()
+        session.get.side_effect = [requests.HTTPError('gateway timeout', response=response), recovered]
+        with patch.object(g.time, 'sleep') as sleep:
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
+        self.assertEqual((item['darkPool'], item['darkPoolAttempts']), (43.16, 2))
+        self.assertIsNone(item['darkPoolError'])
+        sleep.assert_called_once_with(2)
+
+    def test_incomplete_success_response_retries_but_does_not_invent_value(self):
+        session = Mock(); session.get.return_value.text = '<html>temporarily incomplete</html>'
+        with patch.object(g.time, 'sleep') as sleep:
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
+        self.assertEqual(session.get.call_count, 3)
+        self.assertEqual(sleep.call_count, 2)
+        self.assertIsNone(item['darkPool'])
+        self.assertEqual(item['darkPoolStatus'], 'unavailable')
+
+    def test_timeout_retry_is_bounded_and_access_denial_is_not_retried(self):
+        session = Mock(); session.get.side_effect = requests.Timeout('slow source')
+        with patch.object(g.time, 'sleep'):
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
+        self.assertEqual(session.get.call_count, 3)
+        self.assertIsNone(item['darkPool'])
+        denied = requests.Response(); denied.status_code = 403
+        session = Mock(); session.get.side_effect = requests.HTTPError('403', response=denied)
+        with patch.object(g.time, 'sleep') as sleep:
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
+        self.assertEqual(session.get.call_count, 1)
+        sleep.assert_not_called()
+        self.assertIsNone(item['darkPool'])
+
     def test_atomic_writer_rejects_nan_keeps_old_file(self):
         with TemporaryDirectory() as folder:
             path = Path(folder)/'data.json'; path.write_text('old', encoding='utf-8')

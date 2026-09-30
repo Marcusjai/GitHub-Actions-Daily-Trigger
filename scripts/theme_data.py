@@ -17,6 +17,7 @@ import yfinance as yf
 import exchange_calendars as xcals
 
 from scripts.yahoo_history import _batch_frame, completed_sessions
+from scripts.yahoo_chart import download_chart_history
 
 THEMES = {
     "AI": {
@@ -238,19 +239,40 @@ def build_theme_snapshot(core: pd.DataFrame, market_date: str,
         print(f"::warning::Theme batch failed: {exc}", flush=True)
         batch = pd.DataFrame()
     results = {}
+    close_at = xcals.get_calendar(
+        'XNYS', start=str(dates[0].date()), end=str(dates[-1].date())
+    ).session_close(dates[-1])
+    core_recoveries = {
+        record['ticker']: record
+        for record in core.attrs.get('history_validation', {}).get('closing_quote_recoveries', [])
+        if isinstance(record, dict) and 'ticker' in record
+    }
     for ticker in [t for info in THEMES.values() for t in info["etfs"] + info["stocks"]]:
         if ticker in results:
             continue
         try:
+            recovery = None
+            source = 'yahoo_adjusted_daily_history'
             if ticker in core.columns.get_level_values(0):
                 frame = theme_window(core[ticker], ticker, dates)
+                recovery = core_recoveries.get(ticker)
             else:
                 try:
                     frame = theme_window(_batch_frame(batch, ticker), ticker, dates)
                 except Exception:
-                    history = yf.Ticker(ticker).history(raise_errors=True, **params)
-                    frame = theme_window(history, ticker, dates)
+                    try:
+                        history = yf.Ticker(ticker).history(raise_errors=True, **params)
+                        frame = theme_window(history, ticker, dates)
+                    except Exception:
+                        history, recovery, _ = download_chart_history(
+                            ticker, dates, close_at, recover_historical=False
+                        )
+                        frame = theme_window(history, ticker, dates)
+                        source = 'yahoo_adjusted_daily_chart'
             results[ticker] = _metrics(frame, spy, ticker, market_date)
+            results[ticker]['source'] = 'yahoo_closing_quote' if recovery else source
+            if recovery:
+                results[ticker]['priceRecovery'] = recovery
         except Exception as exc:
             print(f"::warning::Theme {ticker} unavailable: {exc}", flush=True)
             results[ticker] = {"ticker": ticker, "name": STOCK_NAMES.get(ticker, ticker),

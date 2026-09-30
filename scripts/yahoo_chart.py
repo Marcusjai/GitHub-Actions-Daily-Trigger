@@ -424,8 +424,10 @@ def download_chart_history(
     dates: pd.DatetimeIndex,
     expected_close: pd.Timestamp,
     previous_snapshot: dict | None = None,
+    *,
+    recover_historical: bool = True,
 ) -> tuple[pd.DataFrame, dict | None, list[dict]]:
-    """Fetch daily chart, recover latest quote and one prior persisted gap."""
+    """Recover latest quote; optional theme histories keep older gaps explicit."""
     if not re.fullmatch(r"[A-Z]{1,6}", ticker):
         raise ValueError("Invalid ticker")
     from curl_cffi import requests
@@ -451,9 +453,11 @@ def download_chart_history(
     )
     if latest_record is not None:
         latest_record["source_url"] = url
-    data, historical_records = recover_previous_snapshot_gap(
-        payload, data, ticker, dates, previous_snapshot
-    )
+    historical_records = []
+    if recover_historical:
+        data, historical_records = recover_previous_snapshot_gap(
+            payload, data, ticker, dates, previous_snapshot
+        )
     for record in historical_records:
         record["daily_source_url"] = url
     return data, latest_record, historical_records

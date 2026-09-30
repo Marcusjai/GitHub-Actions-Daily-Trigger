@@ -49,6 +49,7 @@ class ThemeDataTests(unittest.TestCase):
         result.text = '<title>iShares Future AI & Tech ETF | ARTY</title><h1>ARTY</h1>NAV as of Sep 23, 2026 $78.64 Shares Outstanding 53,950,000 as of Sep 23, 2026'
         with patch.object(t.yf, 'download', return_value=pd.DataFrame()), \
              patch.object(t.yf, 'Ticker', side_effect=RuntimeError('unavailable')), \
+             patch.object(t, 'download_chart_history', side_effect=ValueError('unavailable')), \
              patch.object(t.requests.Session, 'get', return_value=result):
             payload = t.build_theme_snapshot(core, last)
         self.assertEqual(payload['groups'][0]['instruments'][0]['status'], 'unavailable')
@@ -79,10 +80,56 @@ class ThemeDataTests(unittest.TestCase):
         response.text = f'<title>iShares Future AI & Tech ETF | ARTY</title>NAV as of {pd.Timestamp(prior).strftime("%b %d, %Y")} $78.64 Shares Outstanding 53,950,000 as of {pd.Timestamp(prior).strftime("%b %d, %Y")}'
         with patch.object(t.yf, 'download', return_value=pd.DataFrame()), \
              patch.object(t.yf, 'Ticker', side_effect=RuntimeError('unavailable')), \
+             patch.object(t, 'download_chart_history', side_effect=ValueError('unavailable')), \
              patch.object(t.requests.Session, 'get', return_value=response):
             data = t.build_theme_snapshot(core, self.last)
         self.assertEqual(data['issuer_observations']['ARTY'][-1]['date'], prior)
         self.assertEqual(data['issuer_flows']['ARTY']['5']['end'], prior)
+
+    def test_missing_latest_theme_close_recovers_from_exact_closing_quote(self):
+        dates = self.dates
+        valid = pd.DataFrame({'Close': [100.0]*20+[110.0], 'Volume': [1000]*21}, index=dates)
+        incomplete = valid.copy()
+        incomplete.iloc[-1, 0] = float('nan')
+        core = pd.concat({'SPY': valid, 'SMH': valid}, axis=1)
+        symbols = [s for info in t.THEMES.values() for s in info['etfs'] + info['stocks'] if s != 'SMH']
+        batch = pd.concat({s: incomplete for s in symbols}, axis=1)
+        def recovery(symbol, requested, close_at, **kwargs):
+            self.assertTrue(requested.equals(dates))
+            self.assertEqual(close_at.tz_convert('America/New_York').hour, 16)
+            self.assertEqual(kwargs, {'recover_historical': False})
+            record = {'ticker': symbol, 'market_date': self.last, 'price': 110.0,
+                      'method': 'yahoo_regular_market_quote_at_exact_close',
+                      'quote_time_utc': close_at.isoformat()}
+            return valid.copy(), record, []
+        with patch.object(t.yf, 'download', return_value=batch), \
+             patch.object(t.yf, 'Ticker') as ticker, \
+             patch.object(t, 'download_chart_history', side_effect=recovery) as fallback, \
+             patch.object(t.requests.Session, 'get', side_effect=t.requests.Timeout()):
+            ticker.return_value.history.return_value = incomplete
+            result = t.build_theme_snapshot(core, self.last)
+        self.assertEqual(fallback.call_count, 14)
+        instruments = [row for group in result['groups'] for row in group['instruments']]
+        self.assertTrue(all(row['status'] == 'available' for row in instruments))
+        for row in instruments:
+            if row['ticker'] != 'SMH':
+                self.assertEqual(row['source'], 'yahoo_closing_quote')
+                self.assertEqual(row['priceRecovery']['market_date'], self.last)
+                self.assertEqual(row['returns']['5'], 10.0)
+
+    def test_rejected_theme_closing_quote_stays_unavailable(self):
+        valid = pd.DataFrame({'Close': [100.0]*21, 'Volume': [1000]*21}, index=self.dates)
+        core = pd.concat({'SPY': valid, 'SMH': valid}, axis=1)
+        with patch.object(t.yf, 'download', return_value=pd.DataFrame()), \
+             patch.object(t.yf, 'Ticker', side_effect=RuntimeError('missing daily close')), \
+             patch.object(t, 'download_chart_history', side_effect=ValueError('Closing quote is stale')) as fallback, \
+             patch.object(t.requests.Session, 'get', side_effect=t.requests.Timeout()):
+            result = t.build_theme_snapshot(core, self.last)
+        self.assertEqual(fallback.call_count, 14)
+        row = result['groups'][0]['instruments'][0]
+        self.assertEqual(row['status'], 'unavailable')
+        self.assertIn('stale', row['error'])
+        self.assertNotIn('price', row)
 
 
 if __name__ == '__main__':
