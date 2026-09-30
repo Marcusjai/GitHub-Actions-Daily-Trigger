@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-30 01:34:18 UTC",
+  "last_updated": "2026-09-30 01:41:07 UTC",
   "market_date": "2026-09-29",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -16,7 +16,7 @@
     "expected_market_date": "2026-09-29",
     "first_required_session": "2026-08-31",
     "required_sessions": 21,
-    "asof_utc": "2026-09-30T01:33:41.687342+00:00",
+    "asof_utc": "2026-09-30T01:40:30.596782+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
