@@ -105,6 +105,7 @@ class MarketTests(unittest.TestCase):
 
     def test_incomplete_success_response_retries_but_does_not_invent_value(self):
         session = Mock(); session.get.return_value.text = '<html>temporarily incomplete</html>'
+        session.get.return_value.status_code = 200
         with patch.object(g.time, 'sleep') as sleep:
             item = g.fetch_off_exchange(session, 'SPY', '2026-09-01')
         self.assertEqual(session.get.call_count, 3)
@@ -125,6 +126,15 @@ class MarketTests(unittest.TestCase):
         self.assertEqual(session.get.call_count, 1)
         sleep.assert_not_called()
         self.assertIsNone(item['darkPool'])
+
+    def test_off_exchange_outage_cannot_exhaust_production_job_time(self):
+        session = Mock()
+        with patch.object(g.time, 'monotonic', return_value=120):
+            item = g.fetch_off_exchange(session, 'SPY', '2026-09-01', deadline=119)
+        session.get.assert_not_called()
+        self.assertEqual(item['darkPoolAttempts'], 0)
+        self.assertIsNone(item['darkPool'])
+        self.assertIn('budget exhausted', item['darkPoolError'])
 
     def test_atomic_writer_rejects_nan_keeps_old_file(self):
         with TemporaryDirectory() as folder:

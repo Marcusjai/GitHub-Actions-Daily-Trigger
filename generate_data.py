@@ -51,6 +51,7 @@ WATCHLIST = {
     "XLP": {"name": "必選消費 ETF", "cat": "DEFENSIVE"},
 }
 OFF_EXCHANGE_RETRY_DELAYS = (2, 6)
+OFF_EXCHANGE_BUDGET_SECONDS = 120
 TRANSIENT_HTTP_STATUSES = {408, 429, 500, 502, 503, 504}
 TRANSIENT_PARSE_ERRORS = {
     'Ticker-specific volume date not found',
@@ -125,7 +126,8 @@ def parse_off_exchange(html: str, ticker: str) -> tuple[float, str, str]:
 
 
 def fetch_off_exchange(
-    session: requests.Session, ticker: str, market_date: str
+    session: requests.Session, ticker: str, market_date: str,
+    *, deadline: float | None = None,
 ) -> dict[str, Any]:
     url = (
         f"https://chartexchange.com/symbol/"
@@ -139,11 +141,17 @@ def fetch_off_exchange(
         "darkPoolSource": url,
         "darkPoolMetric": "off_exchange_day_pct",
         "darkPoolError": None,
+        "darkPoolAttempts": 0,
     }
     for attempt in range(len(OFF_EXCHANGE_RETRY_DELAYS) + 1):
+        remaining = None if deadline is None else deadline - time.monotonic()
+        if remaining is not None and remaining <= 0:
+            result['darkPoolError'] = 'Off-exchange source retrieval time budget exhausted.'
+            break
         result['darkPoolAttempts'] = attempt + 1
         try:
-            response = session.get(url, timeout=(5, 15))
+            timeout = (5, 15) if remaining is None else (min(5, remaining / 2), min(15, remaining / 2))
+            response = session.get(url, timeout=timeout)
             response.raise_for_status()
             value, source_date, stamp = parse_off_exchange(response.text, ticker)
             result.update(darkPoolDate=source_date, darkPoolAsOf=stamp)
@@ -167,9 +175,20 @@ def fetch_off_exchange(
                 )
             elif isinstance(exc, ValueError):
                 retryable = str(exc) in TRANSIENT_PARSE_ERRORS
+                reader = VisibleText(); reader.feed(response.text); reader.close()
+                visible = re.sub(r'\s+', ' ', ' '.join(reader.parts)).strip()
+                title = re.search(r'<title[^>]*>(.*?)</title>', response.text, re.I | re.S)
+                print(f'{ticker}: off-exchange response diagnostic: ' + json.dumps({
+                    'http_status': response.status_code,
+                    'title': title.group(1)[:120] if title else None,
+                    'text_length': len(response.text),
+                    'visible_preview': visible[:1600],
+                }, ensure_ascii=False), flush=True)
             if not retryable or attempt == len(OFF_EXCHANGE_RETRY_DELAYS):
                 break
             delay = OFF_EXCHANGE_RETRY_DELAYS[attempt]
+            if deadline is not None and time.monotonic() + delay >= deadline:
+                break
             print(
                 f'{ticker}: off-exchange request incomplete; retry {attempt + 1}/'
                 f'{len(OFF_EXCHANGE_RETRY_DELAYS)} after {delay}s ({exc})',
@@ -523,12 +542,14 @@ def generate_real_market_json(
                 )
             }
         )
+        deadline = time.monotonic() + OFF_EXCHANGE_BUDGET_SECONDS
         for item in items:
             item.update(
                 fetch_off_exchange(
                     session,
                     item["ticker"],
                     market_date,
+                    deadline=deadline,
                 )
             )
             if item["darkPool"] is None:
