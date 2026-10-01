@@ -1,0 +1,47 @@
+name: Research Lab Browser Checks
+
+on:
+  push:
+    branches: [main, 'fix/**']
+    paths:
+      - 'docs/research*'
+      - 'docs/index.html'
+      - 'scripts/smoke_research_browser.py'
+      - '.github/workflows/research_browser.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/research*'
+      - 'docs/index.html'
+      - 'scripts/smoke_research_browser.py'
+      - '.github/workflows/research_browser.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: research-browser-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install isolated browser-test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.55.0
+          python -m playwright install --with-deps chromium
+      - name: Test real browser interactions and mobile layouts
+        run: python scripts/smoke_research_browser.py
+      - name: Retain browser screenshots and test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-browser-evidence
+          path: test-artifacts/
+          retention-days: 7
