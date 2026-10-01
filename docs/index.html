@@ -35,6 +35,10 @@
         <button id="fetch-live-btn" onclick="loadDashboardData()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-lg" title="重新讀取已發布的 data.json，不會直接觸發 GitHub 抓取任務。">重新載入每日資料</button>
       </div>
     </header>
+    <nav class="flex flex-wrap items-center gap-3 mt-4 text-xs" aria-label="Website navigation">
+      <a href="./index.html" aria-current="page" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200">Market overview</a>
+      <a href="./research.html" class="bg-sky-900 border border-sky-700 rounded-lg px-3 py-2 text-sky-200">Research Lab → Theme radar · Stock details · Daily review</a>
+    </nav>
     <p id="data-quality-note" class="text-xs text-amber-300 mt-3" role="status" aria-live="polite">缺失來源資料會顯示 N/A，不會估算填補。</p>
     <p class="text-xs text-slate-500 mt-2">Off-exchange 不等於純暗池成交，亦不代表淨買入。訊號只係量價規則，唔係已核實機構資金流。日線盤中仍可能未完成。</p>
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
