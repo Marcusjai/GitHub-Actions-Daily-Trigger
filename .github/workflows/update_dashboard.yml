@@ -15,6 +15,7 @@ on:
       - 'requirements.txt'
       - 'docs/index.html'
       - 'docs/dashboard.js'
+      - 'docs/research*'
       - 'tests/**'
       - 'scripts/**'
       - '.github/workflows/update_dashboard.yml'
@@ -51,8 +52,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Test dashboard rendering and data integrity
         run: |
-          node --check docs/dashboard.js
-          node --test tests/dashboard.test.cjs
+          for file in docs/*.js; do node --check "$file"; done
+          node --test tests/*.test.cjs
       - name: Check whether this session still needs recovery
         id: freshness
         env:

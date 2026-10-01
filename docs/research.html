@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Dated AI and Bitcoin theme research using the existing US Market Institutional Pulse snapshot.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Research Lab | US Market Institutional Pulse</title>
+  <link rel="stylesheet" href="./research.css">
+  <script src="./research.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#research-content">Skip to research</a>
+<main id="research-app" aria-busy="true">
+  <header class="site-header">
+    <div><a class="brand" href="./index.html">MARKET PULSE <span>/ RESEARCH LAB</span></a><p class="muted">From theme strength to the stocks behind it.</p></div>
+    <nav aria-label="Website navigation"><a href="./index.html">Market overview</a><a href="./research.html" aria-current="page">Research Lab</a></nav>
+  </header>
+  <section class="intro">
+    <div><p class="eyebrow">AI + BITCOIN / DAILY RESEARCH</p><h1>Follow the theme.<br><span>Check the evidence.</span></h1><p class="muted intro-copy">A transparent view of your tracked stock baskets. Compare relative strength, inspect the contributors, and keep price signals separate from fund flows.</p></div>
+    <div class="snapshot card"><p class="eyebrow">MARKET SESSION</p><strong id="snapshot-date">Not loaded</strong><p id="generated-at" class="muted">Awaiting the published snapshot.</p><button id="reload">Reload snapshot</button><p class="muted">No live quotes. No automatic trading.</p></div>
+  </section>
+  <p id="load-status" class="notice" role="status" aria-live="polite">Loading the published snapshot…</p>
+  <div id="research-content" hidden>
+    <p id="quality" class="muted"></p>
+    <div class="toolbar">
+      <div id="research-tabs" class="tabs" role="tablist" aria-label="Research tools">
+        <button id="tab-radar" role="tab" data-tab="radar" aria-selected="true" aria-controls="panel-radar">Theme radar</button>
+        <button id="tab-map" role="tab" data-tab="map" aria-selected="false" aria-controls="panel-map" tabindex="-1">Exposure map</button>
+        <button id="tab-stocks" role="tab" data-tab="stocks" aria-selected="false" aria-controls="panel-stocks" tabindex="-1">Stock details</button>
+        <button id="tab-review" role="tab" data-tab="review" aria-selected="false" aria-controls="panel-review" tabindex="-1">Daily review</button>
+      </div>
+      <div class="periods" role="group" aria-label="Return window in trading days"><span>Window</span><button data-period="1" aria-pressed="false">1D</button><button data-period="5" aria-pressed="true">5D</button><button data-period="20" aria-pressed="false">20D</button></div>
+    </div>
+    <section id="panel-radar" data-panel="radar" role="tabpanel" aria-labelledby="tab-radar">
+      <div id="radar-cards" class="two-col"></div>
+      <section class="card matrix-card"><div class="row"><div><p class="eyebrow">TWO WINDOWS / ONE BENCHMARK</p><h2>Where the baskets stand</h2></div><span class="badge">Fixed 5D × 20D view</span></div><p class="muted">Above zero means ahead of SPY, not necessarily a positive absolute return. Both axes require the same complete stock basket.</p><div id="rotation-matrix"></div><p class="muted">These windows overlap. A quadrant is a comparison, not proof that a theme has changed direction or how long a trend has lasted. Partial baskets are not plotted.</p></section>
+    </section>
+    <section id="panel-map" data-panel="map" role="tabpanel" aria-labelledby="tab-map" hidden><div class="section-heading"><h2>Look inside each theme</h2><p class="muted">Curated research buckets, not official industry classifications. Companies can have several business exposures. A single-stock bucket is not sector breadth.</p></div><div id="theme-map" class="two-col"></div></section>
+    <section id="panel-stocks" data-panel="stocks" role="tabpanel" aria-labelledby="tab-stocks" hidden>
+      <section class="card"><div class="row"><div><p class="eyebrow">TRACKED UNIVERSE</p><h2>Stocks & ETF proxies</h2></div><span id="results-count" class="muted"></span></div>
+        <div class="filters"><label>Search<input id="stock-search" type="search" placeholder="Ticker or name" autocomplete="off"></label><label>Theme<select id="theme-filter"><option value="all">All themes</option><option value="AI">AI</option><option value="BTC">Bitcoin</option></select></label><label>Instrument<select id="type-filter"><option value="all">Stocks + ETF/ETP</option><option value="stock">Stocks only</option><option value="ETF / ETP">ETF / ETP only</option></select></label></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col" aria-sort="none"><button data-sort="ticker">Instrument ↕</button></th><th scope="col">Theme / type</th><th scope="col" aria-sort="none"><button data-sort="return">Return ↕</button></th><th scope="col" aria-sort="descending"><button data-sort="relative">vs SPY ↕</button></th><th scope="col" aria-sort="none"><button data-sort="rvol">RVOL ↕</button></th><th scope="col">Source status</th></tr></thead><tbody id="stock-rows"></tbody></table></div><p class="muted">Select a ticker to inspect it below. Missing values sort last in both directions. RVOL always uses the 20-session volume baseline, regardless of the return window.</p>
+      </section>
+      <section id="stock-detail" class="card stock-detail" tabindex="-1" aria-label="Selected instrument details"></section>
+    </section>
+    <section id="panel-review" data-panel="review" role="tabpanel" aria-labelledby="tab-review" hidden><section class="card"><div class="row"><div><p class="eyebrow">DATED + REPRODUCIBLE</p><h2>Your research brief</h2></div><div class="actions"><button id="copy-review">Copy brief</button><button id="download-review" class="secondary">Download brief</button></div></div><p class="muted">Generated from explicit rules, not an AI forecast. The selected return window is included in the report.</p><p id="copy-status" role="status" aria-live="polite"></p><pre id="review-text"></pre></section></section>
+    <details class="method card"><summary>How to read the numbers</summary><div class="method-body"><p><b>Relative return:</b> the published adjusted-price return minus SPY’s return for the same trading-day window. The unit is percentage points (pp), not dollars or investor flows.</p><p><b>Theme basket:</b> an equal-weight arithmetic average of available stock returns. ETF/ETP proxies are excluded. This is a descriptive, fixed starting-weight basket return, not a backtested, daily-rebalanced portfolio.</p><p><b>Breadth:</b> the number of available tracked stocks ahead of SPY divided by available tracked stocks. The denominator is shown. This is not the whole AI or Bitcoin market.</p><p><b>RVOL:</b> latest session volume divided by the preceding 20-session average, excluding that latest session. A negative day with RVOL ≥ 1.50x is listed as a condition to check, not a sell instruction.</p><p><b>Data limits:</b> only same-date observations are used. Incomplete source measurements remain N/A. MA60, candle history, trend duration, live research agents and personal holdings are not supplied by this snapshot.</p><p><b>Fund flows:</b> price/volume strength does not establish net buying. The existing <a href="./index.html">Market overview</a> retains the separate ARTY and IBIT net-issuance estimates and their source requirements.</p><p><b>Implementation:</b> an independent static-site adaptation inspired by the workflow of <a href="https://github.com/jundizhou/easy-stock" target="_blank" rel="noopener noreferrer">easy-stock</a>. No upstream application code, model service or desktop runtime is bundled here.</p><p><a href="./data.json" target="_blank" rel="noopener noreferrer">Inspect the published source snapshot ↗</a></p></div></details>
+  </div>
+  <footer>US Market Institutional Pulse · Research tools, not investment recommendations.<br>The existing data collector and update schedule remain the source of truth.</footer>
+  <noscript>This page needs JavaScript. The raw snapshot is available in <a href="./data.json">data.json</a>.</noscript>
+</main>
+</body>
+</html>
