@@ -1,9 +1,8 @@
 {
-  "last_updated": "2026-10-03 00:41:04 UTC",
+  "last_updated": "2026-10-03 01:17:18 UTC",
   "market_date": "2026-10-02",
   "data_quality": "partial",
   "missing_off_exchange": [
-    "XBI",
     "XLE",
     "XLV",
     "XLP"
@@ -16,7 +15,7 @@
     "expected_market_date": "2026-10-02",
     "first_required_session": "2026-09-03",
     "required_sessions": 21,
-    "asof_utc": "2026-10-03T00:39:02.513107+00:00",
+    "asof_utc": "2026-10-03T01:15:13.413963+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [
       "SPY",
@@ -678,13 +677,13 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XBI"
       },
-      "darkPool": null,
-      "darkPoolStatus": "blocked",
-      "darkPoolDate": null,
-      "darkPoolAsOf": null,
+      "darkPool": 43.32,
+      "darkPoolStatus": "available",
+      "darkPoolDate": "2026-10-02",
+      "darkPoolAsOf": "Oct 2, 2026",
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xbi/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "ChartExchange requires human verification; unattended access needs its supported API.",
+      "darkPoolError": null,
       "darkPoolAttempts": 1
     }
   ],
