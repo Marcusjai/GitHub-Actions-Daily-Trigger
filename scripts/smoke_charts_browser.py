@@ -260,6 +260,24 @@ def main() -> None:
             wait_range(page, initial, 'reset')
             done('Tab and pointer focus share consistent keyboard pan, zoom and Home reset')
 
+            host.scroll_into_view_if_needed()
+            bounds = host.bounding_box()
+            assert bounds
+            x, y = bounds['x'] + bounds['width'] * .45, bounds['y'] + bounds['height'] * .45
+            page.mouse.move(x, y)
+            page.mouse.down()
+            page.mouse.move(x + 100, y, steps=8)
+            page.mouse.up()
+            wait_range(page, initial, 'older')
+            page.locator('#reset-chart').click()
+            wait_range(page, initial, 'reset')
+            page.mouse.move(x, y)
+            page.mouse.wheel(0, -150)
+            wait_range(page, initial, 'in')
+            page.locator('#reset-chart').click()
+            wait_range(page, initial, 'reset')
+            done('Native pointer drag and mouse-wheel zoom change the actual chart range')
+
             first_summary = page.locator('#sample-summary').inner_text()
             for market, interval in [('HK', '1D'), ('HK', '1W'), ('US', '1W'), ('US', '1D'), ('HK', '1D'), ('US', '1D')]:
                 page.locator('#sample-market').select_option(market)
