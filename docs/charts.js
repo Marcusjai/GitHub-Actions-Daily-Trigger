@@ -8,6 +8,8 @@
   let bars = [];
   let generation = 0;
   let ready = false;
+  let renderedSelection = '';
+  const selection = () => ['sample-market', 'sample-interval', 'sample-style'].map(id => el(id).value).join('|');
 
   function enableControls(enabled) {
     ready = enabled;
@@ -67,6 +69,7 @@
 
   async function render() {
     const current = ++generation;
+    renderedSelection = selection();
     enableControls(false);
     el('chart-error').hidden = true;
     el('chart-status').textContent = 'Loading the local sample chart…';
@@ -91,7 +94,8 @@
         downColor: '#ffa5aa'
       });
       chart = instance;
-      instance.renderer.set({ timezone: 'UTC', countdown: false });
+      // The host supplies one consistent, described keyboard navigation surface.
+      instance.renderer.set({ timezone: 'UTC', countdown: false, keyboard: false });
       await instance.ready();
       if (current !== generation) return;
       enableControls(true);
@@ -108,7 +112,12 @@
 
   el('sample-market').addEventListener('change', render);
   el('sample-interval').addEventListener('change', render);
-  el('sample-style').addEventListener('change', () => { if (ready) chart.renderer.set('priceStyle', el('sample-style').value); });
+  el('sample-style').addEventListener('change', () => {
+    if (ready) {
+      chart.renderer.set('priceStyle', el('sample-style').value);
+      renderedSelection = selection();
+    }
+  });
   el('reset-chart').addEventListener('click', resetView);
   el('all-bars').addEventListener('click', () => { if (ready) { chart.renderer.set('autoScale', true); chart.setVisibleRangePreset('ALL'); } });
   el('pan-older').addEventListener('click', () => { if (ready) chart.panBy(-0.25); });
@@ -116,12 +125,20 @@
   el('zoom-in').addEventListener('click', () => zoom(0.7));
   el('zoom-out').addEventListener('click', () => zoom(1 / 0.7));
   host.addEventListener('keydown', event => {
-    if (event.target !== host || !ready || event.ctrlKey || event.metaKey || event.altKey) return;
+    if ((event.target !== host && !(event.target instanceof HTMLCanvasElement)) || !ready || event.ctrlKey || event.metaKey || event.altKey) return;
     const actions = { ArrowLeft: () => chart.panBy(-0.25), ArrowRight: () => chart.panBy(0.25), '+': () => zoom(0.7), '=': () => zoom(0.7), '-': () => zoom(1 / 0.7), Home: resetView };
     if (actions[event.key]) { event.preventDefault(); actions[event.key](); }
   });
+  host.addEventListener('pointerdown', event => {
+    if (event.target instanceof HTMLCanvasElement) host.focus({ preventScroll: true });
+  });
   const observer = new ResizeObserver(() => { if (chart) chart.resize(); });
   observer.observe(host);
+  // Browsers can restore form selections after deferred scripts have rendered.
+  window.addEventListener('pageshow', () => {
+    if (renderedSelection !== selection()) render();
+    else if (chart) chart.resize();
+  });
   // Retain an intact page in the back/forward cache; clean up only on final unload.
   window.addEventListener('pagehide', event => {
     if (event.persisted) return;

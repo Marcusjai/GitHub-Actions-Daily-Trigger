@@ -239,7 +239,10 @@ def main() -> None:
             done('Older/newer, zoom in/out, all bars and reset change the actual Vela visible range')
 
             host = page.locator('#sample-chart')
-            host.focus()
+            page.locator('#reset-chart').focus()
+            page.keyboard.press('Tab')
+            expect(host).to_be_focused()
+            expect(page.locator('#sample-chart canvas[tabindex="0"]')).to_have_count(0)
             page.keyboard.press('ArrowLeft')
             keyboard_older = wait_range(page, initial, 'older')
             page.keyboard.press('ArrowRight')
@@ -249,7 +252,13 @@ def main() -> None:
             wait_range(page, before, 'in')
             page.keyboard.press('Home')
             wait_range(page, initial, 'reset')
-            done('Focused-chart keyboard pan, zoom and Home reset operate the actual chart')
+            host.click(position={'x': 120, 'y': 150})
+            expect(host).to_be_focused()
+            page.keyboard.press('ArrowLeft')
+            wait_range(page, initial, 'older')
+            page.keyboard.press('Home')
+            wait_range(page, initial, 'reset')
+            done('Tab and pointer focus share consistent keyboard pan, zoom and Home reset')
 
             first_summary = page.locator('#sample-summary').inner_text()
             for market, interval in [('HK', '1D'), ('HK', '1W'), ('US', '1W'), ('US', '1D'), ('HK', '1D'), ('US', '1D')]:
