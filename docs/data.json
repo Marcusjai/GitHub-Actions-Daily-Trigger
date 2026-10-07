@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-07 00:56:30 UTC",
+  "last_updated": "2026-10-07 01:38:53 UTC",
   "market_date": "2026-10-06",
   "data_quality": "available_not_independently_verified",
   "missing_off_exchange": [],
@@ -11,7 +11,7 @@
     "expected_market_date": "2026-10-06",
     "first_required_session": "2026-09-08",
     "required_sessions": 21,
-    "asof_utc": "2026-10-07T00:56:26.176002+00:00",
+    "asof_utc": "2026-10-07T01:38:48.266170+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -407,7 +407,7 @@
           "kind": "AI ETF",
           "date": "2026-10-06",
           "price": 81.24,
-          "volume": 433717,
+          "volume": 433700,
           "rvol": 1.04,
           "returns": {
             "1": 0.54,
@@ -422,26 +422,30 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "ARTY",
-            "market_date": "2026-10-06",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-10-06T20:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 81.24,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ARTY"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "AIQ",
           "name": "AIQ",
           "kind": "AI ETF",
           "date": "2026-10-06",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 67.05,
+          "volume": 1530100,
+          "rvol": 1.45,
+          "returns": {
+            "1": 0.3,
+            "5": 3.07,
+            "20": 4.24
+          },
+          "vs_spy": {
+            "1": -0.25,
+            "5": 1.13,
+            "20": 2.28
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "SMH",
@@ -541,7 +545,7 @@
           "kind": "股票",
           "date": "2026-10-06",
           "price": 192.07,
-          "volume": 17636801,
+          "volume": 17614000,
           "rvol": 0.78,
           "returns": {
             "1": 1.41,
@@ -556,18 +560,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "PLTR",
-            "market_date": "2026-10-06",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-10-06T20:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 192.07,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/PLTR"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSFT",
@@ -615,8 +608,23 @@
           "name": "IBIT",
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-10-06",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 48.49,
+          "volume": 30271200,
+          "rvol": 0.67,
+          "returns": {
+            "1": -0.14,
+            "5": 2.45,
+            "20": 9.24
+          },
+          "vs_spy": {
+            "1": -0.69,
+            "5": 0.5,
+            "20": 7.27
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "FBTC",
@@ -624,7 +632,7 @@
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-10-06",
           "price": 74.48,
-          "volume": 1914445,
+          "volume": 1912800,
           "rvol": 0.53,
           "returns": {
             "1": -0.09,
@@ -639,34 +647,53 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "FBTC",
-            "market_date": "2026-10-06",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-10-06T20:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 74.48,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/FBTC"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "BKCH",
           "name": "BKCH",
           "kind": "區塊鏈股票 ETF",
           "date": "2026-10-06",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 69.94,
+          "volume": 50200,
+          "rvol": 1.23,
+          "returns": {
+            "1": -0.1,
+            "5": -2.18,
+            "20": -7.27
+          },
+          "vs_spy": {
+            "1": -0.65,
+            "5": -4.13,
+            "20": -9.23
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "COIN",
           "name": "Coinbase",
           "kind": "股票",
           "date": "2026-10-06",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 185.74,
+          "volume": 5590700,
+          "rvol": 0.58,
+          "returns": {
+            "1": -1.32,
+            "5": -2.25,
+            "20": 3.8
+          },
+          "vs_spy": {
+            "1": -1.87,
+            "5": -4.2,
+            "20": 1.83
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSTR",
@@ -696,8 +723,23 @@
           "name": "MARA",
           "kind": "股票",
           "date": "2026-10-06",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 10.97,
+          "volume": 28529100,
+          "rvol": 0.64,
+          "returns": {
+            "1": -1.79,
+            "5": -8.51,
+            "20": -7.27
+          },
+          "vs_spy": {
+            "1": -2.34,
+            "5": -10.46,
+            "20": -9.24
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "RIOT",
@@ -705,7 +747,7 @@
           "kind": "股票",
           "date": "2026-10-06",
           "price": 18.93,
-          "volume": 15256902,
+          "volume": 15252100,
           "rvol": 0.96,
           "returns": {
             "1": -2.02,
@@ -720,18 +762,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "RIOT",
-            "market_date": "2026-10-06",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-10-06T20:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 18.93,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/RIOT"
-          }
+          "source": "yahoo_adjusted_daily_history"
         }
       ]
     }
@@ -823,6 +854,12 @@
         "nav": 48.51,
         "shares": 1422160000,
         "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
+      },
+      {
+        "date": "2026-10-06",
+        "nav": 48.41,
+        "shares": 1423600000,
+        "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
       }
     ]
   },
@@ -847,20 +884,20 @@
     },
     "IBIT": {
       "5": {
-        "usd": 451887600,
+        "usd": 466730000,
         "status": "available",
         "observations": 6,
         "required": 6,
-        "start": "2026-09-28",
-        "end": "2026-10-05"
+        "start": "2026-09-29",
+        "end": "2026-10-06"
       },
       "20": {
         "usd": null,
         "status": "insufficient_history",
-        "observations": 7,
+        "observations": 8,
         "required": 21,
-        "start": "2026-09-04",
-        "end": "2026-10-05"
+        "start": "2026-09-08",
+        "end": "2026-10-06"
       }
     }
   },
