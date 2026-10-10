@@ -6,14 +6,20 @@ on:
     paths:
       - 'docs/research*'
       - 'docs/index.html'
+      - 'docs/chart*'
+      - 'docs/vendor/vela-*/**'
       - 'scripts/smoke_research_browser.py'
+      - 'scripts/smoke_charts_browser.py'
       - '.github/workflows/research_browser.yml'
   pull_request:
     branches: [main]
     paths:
       - 'docs/research*'
       - 'docs/index.html'
+      - 'docs/chart*'
+      - 'docs/vendor/vela-*/**'
       - 'scripts/smoke_research_browser.py'
+      - 'scripts/smoke_charts_browser.py'
       - '.github/workflows/research_browser.yml'
 
 permissions:
@@ -37,7 +43,9 @@ jobs:
           python -m pip install --disable-pip-version-check playwright==1.55.0
           python -m playwright install --with-deps chromium
       - name: Test real browser interactions and mobile layouts
-        run: python scripts/smoke_research_browser.py
+        run: |
+          python scripts/smoke_research_browser.py
+          python scripts/smoke_charts_browser.py
       - name: Retain browser screenshots and test report
         if: always()
         uses: actions/upload-artifact@v4
