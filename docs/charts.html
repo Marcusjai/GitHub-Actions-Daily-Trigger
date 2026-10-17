@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore Vela charts with clearly labelled, fictional US and Hong Kong sample data. No market feed.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Chart Lab · Synthetic samples | Research Lab</title>
+  <link rel="stylesheet" href="./research.css">
+  <link rel="stylesheet" href="./charts.css">
+  <script src="./chart-samples.js" defer></script>
+  <script src="./vendor/vela-0.8.1/vela.global.min.js" defer></script>
+  <script src="./charts.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#chart-lab">Skip to chart</a>
+<main>
+  <header class="site-header">
+    <div><a class="brand" href="./index.html">MARKET PULSE <span>/ CHART LAB</span></a><p class="muted">A safe space to explore chart interactions.</p></div>
+    <nav aria-label="Website navigation"><a href="./index.html">Market overview</a><a href="./research.html">Research Lab</a><a href="./charts.html" aria-current="page">Chart Lab · Samples</a></nav>
+  </header>
+  <section class="chart-intro">
+    <p class="eyebrow">INTERACTIVE SANDBOX / POWERED BY VELA</p>
+    <h1>Explore the chart.<br><span>Keep it synthetic.</span></h1>
+    <p class="muted intro-copy">Pan, zoom and compare chart styles using fictional US and Hong Kong instruments. Every candle is generated locally from a fixed seed.</p>
+  </section>
+  <aside class="sample-notice" id="sample-disclosure"><strong>SYNTHETIC SAMPLE DATA ONLY</strong><p>These are invented prices and volumes, not actual stock history, live quotes or delayed quotes. US-DEMO and HK-DEMO are fictional symbols. Do not use this page for investment decisions.</p></aside>
+  <section id="chart-lab" class="card chart-card" aria-labelledby="chart-title" aria-describedby="sample-disclosure">
+    <div class="row"><div><p class="eyebrow">OFFLINE DEMO / NO MARKET FEED</p><h2 id="chart-title">US-DEMO <span class="muted">· Synthetic sample · USD</span></h2></div><span class="badge caution">SAMPLE, NOT MARKET DATA</span></div>
+    <div class="chart-controls">
+      <label>Sample market<select id="sample-market"><option value="US">US-DEMO · USD</option><option value="HK">HK-DEMO · HKD</option></select></label>
+      <label>Sample interval<select id="sample-interval"><option value="1D">Daily candles</option><option value="1W">Weekly candles</option></select></label>
+      <label>Chart style<select id="sample-style"><option value="candles">Candlesticks</option><option value="line">Close-price line</option></select></label>
+      <button id="reset-chart" class="secondary">Reset view</button>
+    </div>
+    <p id="chart-status" class="muted" role="status" aria-live="polite">Loading the local sample chart…</p>
+    <div class="chart-stage">
+      <div id="sample-chart" tabindex="0" role="region" aria-label="Interactive synthetic sample chart" aria-describedby="chart-help"></div>
+      <span class="sample-watermark" aria-hidden="true">SYNTHETIC SAMPLE ONLY</span>
+      <div id="chart-error" hidden role="alert"><strong>The chart could not load.</strong><p>The sample candle table below is still available. Reload this page to try again.</p></div>
+    </div>
+    <div class="chart-navigation" role="group" aria-label="Chart navigation">
+      <button id="pan-older" class="secondary" aria-label="Pan to older sample candles">← Older</button><button id="pan-newer" class="secondary" aria-label="Pan to newer sample candles">Newer →</button>
+      <button id="zoom-in" class="secondary">Zoom in +</button><button id="zoom-out" class="secondary">Zoom out −</button>
+      <button id="all-bars" class="secondary">All sample bars</button>
+    </div>
+    <p id="chart-help" class="muted">Drag to pan; scroll or pinch to zoom. On a focused chart, use ← / → to pan, + / − to zoom, and Home to reset. The buttons offer the same controls.</p>
+    <div class="chart-credit"><span>Charts by <a href="https://velacharts.dev" target="_blank" rel="noopener noreferrer">Vela™ by LuxAlgo</a> · Apache-2.0</span><a href="./vendor/vela-0.8.1/NOTICE">Attribution notice</a></div>
+  </section>
+  <section class="two-col sample-details">
+    <div class="card"><p class="eyebrow">READ THE LAST SAMPLE</p><h2 id="sample-summary-title">Latest generated candle</h2><p class="muted" id="sample-date"></p><dl id="sample-summary" class="sample-summary"></dl><p class="muted">USD and HKD are display units for separate fictional datasets. They are not currency conversions.</p></div>
+    <div class="card"><p class="eyebrow">WHAT THIS DEMO DOES</p><h2>Charting without a data feed</h2><ul class="sample-rules"><li>180 invented weekday candles, starting 2 January 2024</li><li>Fixed seeds produce the same values on every visit</li><li>Weekly candles aggregate these daily samples; boundary weeks can be partial</li><li>Dates are illustrative, with no exchange holidays or session-calendar claims</li><li>No API keys, providers, live updates or external chart assets</li></ul><p class="muted">The <a href="./research.html">Research Lab snapshot</a> remains separate. These samples never enter its calculations or briefs.</p></div>
+  </section>
+  <details class="method card" open><summary>Inspect the last 8 synthetic candles</summary><p class="muted" id="sample-table-caption"></p><div class="table-wrap"><table><caption class="sr-only">Last eight synthetic sample candles, not actual market history</caption><thead><tr><th scope="col">Sample date (UTC)</th><th scope="col">Open</th><th scope="col">High</th><th scope="col">Low</th><th scope="col">Close</th><th scope="col">Invented volume</th></tr></thead><tbody id="sample-rows"></tbody></table></div></details>
+  <footer>Chart Lab · Synthetic demonstration only, not investment research.<br><a href="./vendor/vela-0.8.1/LICENSE">Vela license</a> · <a href="https://github.com/LuxAlgo/Vela" target="_blank" rel="noopener noreferrer">Vela source</a> · No market data service is connected to this page.</footer>
+  <noscript>Enable JavaScript to generate the fictional sample candles and interactive chart. No actual prices are displayed on this page.</noscript>
+</main>
+</body>
+</html>
