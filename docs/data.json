@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21 00:05:22 UTC",
+  "last_updated": "2026-10-21 00:43:03 UTC",
   "market_date": "2026-10-20",
   "data_quality": "available_not_independently_verified",
   "missing_off_exchange": [],
@@ -11,7 +11,7 @@
     "expected_market_date": "2026-10-20",
     "first_required_session": "2026-09-22",
     "required_sessions": 21,
-    "asof_utc": "2026-10-21T00:03:21.461026+00:00",
+    "asof_utc": "2026-10-21T00:41:00.145167+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [
       "SPY",
@@ -216,7 +216,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
       },
-      "darkPool": 41.2,
+      "darkPool": 41.19,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-20",
       "darkPoolAsOf": "Oct 20, 2026",
@@ -251,7 +251,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ"
       },
-      "darkPool": 37.4,
+      "darkPool": 37.39,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-20",
       "darkPoolAsOf": "Oct 20, 2026",
@@ -603,7 +603,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/URA"
       },
-      "darkPool": 42.86,
+      "darkPool": 42.88,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-20",
       "darkPoolAsOf": "Oct 20, 2026",
@@ -638,7 +638,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLK"
       },
-      "darkPool": 44.9,
+      "darkPool": 44.89,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-20",
       "darkPoolAsOf": "Oct 20, 2026",
@@ -673,7 +673,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMH"
       },
-      "darkPool": 54.35,
+      "darkPool": 54.34,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-20",
       "darkPoolAsOf": "Oct 20, 2026",
