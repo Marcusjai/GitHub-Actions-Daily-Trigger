@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-22 00:10:09 UTC",
+  "last_updated": "2026-10-22 00:46:02 UTC",
   "market_date": "2026-10-21",
   "data_quality": "available_not_independently_verified",
   "missing_off_exchange": [],
@@ -11,7 +11,7 @@
     "expected_market_date": "2026-10-21",
     "first_required_session": "2026-09-23",
     "required_sessions": 21,
-    "asof_utc": "2026-10-22T00:08:05.841049+00:00",
+    "asof_utc": "2026-10-22T00:43:56.080913+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [
       "SPY",
@@ -251,7 +251,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ"
       },
-      "darkPool": 39.51,
+      "darkPool": 39.5,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-21",
       "darkPoolAsOf": "Oct 21, 2026",
@@ -286,7 +286,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/IWM"
       },
-      "darkPool": 28.99,
+      "darkPool": 29.0,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-21",
       "darkPoolAsOf": "Oct 21, 2026",
@@ -358,7 +358,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMH"
       },
-      "darkPool": 46.02,
+      "darkPool": 46.0,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-21",
       "darkPoolAsOf": "Oct 21, 2026",
@@ -568,7 +568,7 @@
         "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
         "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLE"
       },
-      "darkPool": 30.08,
+      "darkPool": 30.07,
       "darkPoolStatus": "available",
       "darkPoolDate": "2026-10-21",
       "darkPoolAsOf": "Oct 21, 2026",
@@ -1229,6 +1229,12 @@
         "nav": 46.66,
         "shares": 1432840000,
         "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
+      },
+      {
+        "date": "2026-10-21",
+        "nav": 47.76,
+        "shares": 1433480000,
+        "source": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf"
       }
     ]
   },
@@ -1257,16 +1263,16 @@
         "status": "insufficient_history",
         "observations": 5,
         "required": 6,
-        "start": "2026-10-13",
-        "end": "2026-10-20"
+        "start": "2026-10-14",
+        "end": "2026-10-21"
       },
       "20": {
         "usd": null,
         "status": "insufficient_history",
-        "observations": 17,
+        "observations": 18,
         "required": 21,
-        "start": "2026-09-22",
-        "end": "2026-10-20"
+        "start": "2026-09-23",
+        "end": "2026-10-21"
       }
     }
   },
