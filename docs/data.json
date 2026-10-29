@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-29 01:54:14 UTC",
+  "last_updated": "2026-10-29 05:59:20 UTC",
   "market_date": "2026-10-28",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-10-28",
     "first_required_session": "2026-09-30",
     "required_sessions": 21,
-    "asof_utc": "2026-10-29T01:52:14.574712+00:00",
+    "asof_utc": "2026-10-29T05:57:17.428271+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -323,7 +323,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 3
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLP",
@@ -346,8 +346,8 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 3
+      "darkPoolError": "HTTPSConnectionPool(host='chartexchange.com', port=443): Read timed out. (read timeout=0.8214420340000004)",
+      "darkPoolAttempts": 1
     },
     {
       "ticker": "XLU",
