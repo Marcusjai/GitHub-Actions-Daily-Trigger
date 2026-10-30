@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-30 02:02:55 UTC",
+  "last_updated": "2026-10-30 05:59:56 UTC",
   "market_date": "2026-10-29",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-10-29",
     "first_required_session": "2026-10-01",
     "required_sessions": 21,
-    "asof_utc": "2026-10-30T02:00:52.561789+00:00",
+    "asof_utc": "2026-10-30T05:57:55.495755+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -155,7 +155,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 3
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLP",
