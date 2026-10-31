@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-31 01:41:03 UTC",
+  "last_updated": "2026-10-31 05:56:02 UTC",
   "market_date": "2026-10-30",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-10-30",
     "first_required_session": "2026-10-02",
     "required_sessions": 21,
-    "asof_utc": "2026-10-31T01:39:03.183877+00:00",
+    "asof_utc": "2026-10-31T05:54:03.722414+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -179,7 +179,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 3
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLU",
