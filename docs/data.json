@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-04 02:27:31 UTC",
+  "last_updated": "2026-11-04 06:39:48 UTC",
   "market_date": "2026-11-03",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-11-03",
     "first_required_session": "2026-10-06",
     "required_sessions": 21,
-    "asof_utc": "2026-11-04T02:25:31.698260+00:00",
+    "asof_utc": "2026-11-04T06:37:46.472942+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -250,7 +250,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-ura/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-ura/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
