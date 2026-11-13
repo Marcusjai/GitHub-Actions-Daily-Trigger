@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-13 02:06:23 UTC",
+  "last_updated": "2026-11-13 02:42:55 UTC",
   "market_date": "2026-11-12",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,180 +26,10 @@
     "expected_market_date": "2026-11-12",
     "first_required_session": "2026-10-15",
     "required_sessions": 21,
-    "asof_utc": "2026-11-13T02:02:28.903468+00:00",
+    "asof_utc": "2026-11-13T02:40:53.446950+00:00",
     "publication_buffer_minutes": 30,
-    "recovered_tickers": [
-      "SPY",
-      "QQQ",
-      "IWM",
-      "DIA",
-      "SMH",
-      "URA",
-      "XLU",
-      "XLK",
-      "XLI",
-      "XLF",
-      "XBI",
-      "XLE",
-      "XLV",
-      "XLP"
-    ],
-    "closing_quote_recoveries": [
-      {
-        "ticker": "SPY",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 757.12,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
-      },
-      {
-        "ticker": "QQQ",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 688.17,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ"
-      },
-      {
-        "ticker": "IWM",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 278.44,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/IWM"
-      },
-      {
-        "ticker": "DIA",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 522.47,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/DIA"
-      },
-      {
-        "ticker": "SMH",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 501.73,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMH"
-      },
-      {
-        "ticker": "URA",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 32.36,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/URA"
-      },
-      {
-        "ticker": "XLU",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 43.81,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLU"
-      },
-      {
-        "ticker": "XLK",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 173.77,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLK"
-      },
-      {
-        "ticker": "XLI",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 169.44,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLI"
-      },
-      {
-        "ticker": "XLF",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 58.21,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLF"
-      },
-      {
-        "ticker": "XBI",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 151.2,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XBI"
-      },
-      {
-        "ticker": "XLE",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 64.33,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLE"
-      },
-      {
-        "ticker": "XLV",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 187.83,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLV"
-      },
-      {
-        "ticker": "XLP",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 91.06,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLP"
-      }
-    ],
+    "recovered_tickers": [],
+    "closing_quote_recoveries": [],
     "historical_recoveries": [],
     "missing_required_observations": 0,
     "fill_policy": "no estimates or forward fill; latest close may use an exact-timestamp Yahoo closing quote; a prior published Yahoo daily observation may be reused only with corporate-action and minute-bar corroboration. Legacy daily volume stays an interval until exact source volume is available."
@@ -213,24 +43,13 @@
       "return": -0.35,
       "change": "-2.69",
       "alpha": 0.0,
-      "volume": 37043281,
-      "rvol": 0.76,
+      "volume": 37243000,
+      "rvol": 0.77,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "SPY",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 757.12,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -248,24 +67,13 @@
       "return": -0.32,
       "change": "-2.21",
       "alpha": 0.03,
-      "volume": 36073858,
-      "rvol": 0.7,
+      "volume": 36718000,
+      "rvol": 0.72,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "QQQ",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 688.17,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -283,24 +91,13 @@
       "return": -1.64,
       "change": "-4.65",
       "alpha": -1.29,
-      "volume": 22572446,
-      "rvol": 0.91,
+      "volume": 22615700,
+      "rvol": 0.92,
       "rvolExact": true,
       "signal": "DISTRIBUTION",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "IWM",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 278.44,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/IWM"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -318,24 +115,13 @@
       "return": -0.38,
       "change": "-1.97",
       "alpha": -0.02,
-      "volume": 1683219,
-      "rvol": 0.43,
+      "volume": 1691600,
+      "rvol": 0.44,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "DIA",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 522.47,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/DIA"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -355,24 +141,13 @@
       "return": 1.51,
       "change": "+0.96",
       "alpha": 1.87,
-      "volume": 25927227,
+      "volume": 26002000,
       "rvol": 0.69,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLE",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 64.33,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLE"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -390,24 +165,13 @@
       "return": -0.02,
       "change": "-0.01",
       "alpha": 0.33,
-      "volume": 16984005,
+      "volume": 17034100,
       "rvol": 0.63,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLU",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 43.81,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLU"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -425,24 +189,13 @@
       "return": -0.34,
       "change": "-0.59",
       "alpha": 0.02,
-      "volume": 9693263,
-      "rvol": 0.75,
+      "volume": 9929100,
+      "rvol": 0.77,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLK",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 173.77,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLK"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -460,24 +213,13 @@
       "return": -0.43,
       "change": "-0.39",
       "alpha": -0.07,
-      "volume": 13909272,
-      "rvol": 0.7,
+      "volume": 13915600,
+      "rvol": 0.71,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLP",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 91.06,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLP"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -485,7 +227,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 2
+      "darkPoolAttempts": 1
     },
     {
       "ticker": "XLV",
@@ -495,24 +237,13 @@
       "return": -0.59,
       "change": "-1.12",
       "alpha": -0.24,
-      "volume": 7772094,
+      "volume": 7795500,
       "rvol": 0.68,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLV",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 187.83,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLV"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -520,7 +251,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 3
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLF",
@@ -530,24 +261,13 @@
       "return": -0.72,
       "change": "-0.42",
       "alpha": -0.36,
-      "volume": 21981255,
+      "volume": 22013600,
       "rvol": 0.63,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLF",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 58.21,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLF"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -565,24 +285,13 @@
       "return": -0.89,
       "change": "-1.53",
       "alpha": -0.54,
-      "volume": 6402923,
+      "volume": 6414300,
       "rvol": 0.72,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XLI",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 169.44,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XLI"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -600,24 +309,13 @@
       "return": -1.03,
       "change": "-5.23",
       "alpha": -0.68,
-      "volume": 10075387,
-      "rvol": 0.82,
+      "volume": 10175300,
+      "rvol": 0.83,
       "rvolExact": true,
       "signal": "NEUTRAL",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "SMH",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 501.73,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMH"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -635,24 +333,13 @@
       "return": -3.27,
       "change": "-5.11",
       "alpha": -2.92,
-      "volume": 8524022,
+      "volume": 8531500,
       "rvol": 0.92,
       "rvolExact": true,
       "signal": "DISTRIBUTION",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "XBI",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 151.2,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/XBI"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -670,24 +357,13 @@
       "return": -3.8,
       "change": "-1.28",
       "alpha": -3.45,
-      "volume": 3451645,
-      "rvol": 0.74,
+      "volume": 3569100,
+      "rvol": 0.76,
       "rvolExact": true,
       "signal": "DISTRIBUTION",
       "market_date": "2026-11-12",
       "rvolLookback": 20,
-      "priceSource": "yahoo_closing_quote",
-      "priceRecovery": {
-        "ticker": "URA",
-        "market_date": "2026-11-12",
-        "method": "yahoo_regular_market_quote_at_exact_close",
-        "quote_time_utc": "2026-11-12T21:00:00+00:00",
-        "source_field": "meta.regularMarketPrice",
-        "price": 32.36,
-        "reason": "daily Close and Adj Close were null",
-        "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-        "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/URA"
-      },
+      "priceSource": "yahoo_adjusted_daily_history",
       "darkPool": null,
       "darkPoolStatus": "unavailable",
       "darkPoolDate": null,
@@ -746,7 +422,7 @@
           "kind": "AI ETF",
           "date": "2026-11-12",
           "price": 67.06,
-          "volume": 563892,
+          "volume": 564200,
           "rvol": 0.86,
           "returns": {
             "1": -1.27,
@@ -761,26 +437,30 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "ARTY",
-            "market_date": "2026-11-12",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-12T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 67.06,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ARTY"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "AIQ",
           "name": "AIQ",
           "kind": "AI ETF",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 59.49,
+          "volume": 983900,
+          "rvol": 0.59,
+          "returns": {
+            "1": -0.7,
+            "5": 5.95,
+            "20": -7.18
+          },
+          "vs_spy": {
+            "1": -0.35,
+            "5": 2.66,
+            "20": -5.28
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "SMH",
@@ -788,8 +468,8 @@
           "kind": "半導體 ETF",
           "date": "2026-11-12",
           "price": 501.73,
-          "volume": 10075387,
-          "rvol": 0.82,
+          "volume": 10175300,
+          "rvol": 0.83,
           "returns": {
             "1": -1.03,
             "5": 12.06,
@@ -803,42 +483,76 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "SMH",
-            "market_date": "2026-11-12",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-12T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 501.73,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMH"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "NVDA",
           "name": "NVIDIA",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 166.19,
+          "volume": 742789000,
+          "rvol": 4.49,
+          "returns": {
+            "1": -4.34,
+            "5": -8.49,
+            "20": -23.5
+          },
+          "vs_spy": {
+            "1": -3.99,
+            "5": -11.78,
+            "20": -21.6
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "AMD",
           "name": "AMD",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 585.3,
+          "volume": 55161000,
+          "rvol": 1.72,
+          "returns": {
+            "1": 5.86,
+            "5": 44.73,
+            "20": 4.1
+          },
+          "vs_spy": {
+            "1": 6.21,
+            "5": 41.44,
+            "20": 6.0
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "AVGO",
           "name": "Broadcom",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 364.36,
+          "volume": 43622200,
+          "rvol": 1.68,
+          "returns": {
+            "1": 5.54,
+            "5": 24.98,
+            "20": 5.82
+          },
+          "vs_spy": {
+            "1": 5.9,
+            "5": 21.69,
+            "20": 7.72
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "PLTR",
@@ -846,7 +560,7 @@
           "kind": "股票",
           "date": "2026-11-12",
           "price": 171.58,
-          "volume": 12382352,
+          "volume": 12406100,
           "rvol": 0.47,
           "returns": {
             "1": -0.48,
@@ -861,26 +575,30 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "PLTR",
-            "market_date": "2026-11-12",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-12T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 171.58,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/PLTR"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSFT",
           "name": "Microsoft",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 523.0,
+          "volume": 18586800,
+          "rvol": 0.7,
+          "returns": {
+            "1": 0.36,
+            "5": -2.41,
+            "20": -3.05
+          },
+          "vs_spy": {
+            "1": 0.71,
+            "5": -5.7,
+            "20": -1.15
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         }
       ]
     },
@@ -905,8 +623,23 @@
           "name": "IBIT",
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 40.36,
+          "volume": 55915800,
+          "rvol": 1.31,
+          "returns": {
+            "1": -4.45,
+            "5": -6.2,
+            "20": -13.37
+          },
+          "vs_spy": {
+            "1": -4.1,
+            "5": -9.5,
+            "20": -11.47
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "FBTC",
@@ -914,7 +647,7 @@
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-11-12",
           "price": 62.03,
-          "volume": 5081094,
+          "volume": 5086500,
           "rvol": 1.41,
           "returns": {
             "1": -4.39,
@@ -929,42 +662,76 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "FBTC",
-            "market_date": "2026-11-12",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-12T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 62.03,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/FBTC"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "BKCH",
           "name": "BKCH",
           "kind": "區塊鏈股票 ETF",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 47.4,
+          "volume": 28900,
+          "rvol": 0.51,
+          "returns": {
+            "1": -3.68,
+            "5": 7.26,
+            "20": -21.58
+          },
+          "vs_spy": {
+            "1": -3.32,
+            "5": 3.97,
+            "20": -19.67
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "COIN",
           "name": "Coinbase",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 130.67,
+          "volume": 6331000,
+          "rvol": 0.75,
+          "returns": {
+            "1": -4.11,
+            "5": -4.49,
+            "20": -28.91
+          },
+          "vs_spy": {
+            "1": -3.76,
+            "5": -7.79,
+            "20": -27.01
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSTR",
           "name": "Strategy",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 114.41,
+          "volume": 19611900,
+          "rvol": 1.09,
+          "returns": {
+            "1": -6.49,
+            "5": -11.52,
+            "20": -24.38
+          },
+          "vs_spy": {
+            "1": -6.14,
+            "5": -14.81,
+            "20": -22.48
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MARA",
@@ -972,8 +739,8 @@
           "kind": "股票",
           "date": "2026-11-12",
           "price": 7.2,
-          "volume": 43979633,
-          "rvol": 1.11,
+          "volume": 44073700,
+          "rvol": 1.12,
           "returns": {
             "1": -6.01,
             "5": 22.45,
@@ -987,26 +754,30 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "MARA",
-            "market_date": "2026-11-12",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-12T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 7.2,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/MARA"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "RIOT",
           "name": "Riot Platforms",
           "kind": "股票",
           "date": "2026-11-12",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 17.83,
+          "volume": 24332700,
+          "rvol": 0.89,
+          "returns": {
+            "1": -2.46,
+            "5": 20.8,
+            "20": 15.03
+          },
+          "vs_spy": {
+            "1": -2.11,
+            "5": 17.51,
+            "20": 16.93
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         }
       ]
     }
