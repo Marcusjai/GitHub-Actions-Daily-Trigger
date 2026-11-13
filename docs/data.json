@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-13 02:42:55 UTC",
+  "last_updated": "2026-11-13 06:56:40 UTC",
   "market_date": "2026-11-12",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-11-12",
     "first_required_session": "2026-10-15",
     "required_sessions": 21,
-    "asof_utc": "2026-11-13T02:40:53.446950+00:00",
+    "asof_utc": "2026-11-13T06:54:42.863644+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -227,7 +227,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 1
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLV",
@@ -251,7 +251,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 2
+      "darkPoolAttempts": 3
     },
     {
       "ticker": "XLF",
