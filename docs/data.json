@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14 02:31:45 UTC",
+  "last_updated": "2026-11-14 06:40:01 UTC",
   "market_date": "2026-11-13",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-11-13",
     "first_required_session": "2026-10-16",
     "required_sessions": 21,
-    "asof_utc": "2026-11-14T02:29:44.089283+00:00",
+    "asof_utc": "2026-11-14T06:38:01.356424+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -155,7 +155,7 @@
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
       "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 1
+      "darkPoolAttempts": 2
     },
     {
       "ticker": "XLE",
@@ -422,7 +422,7 @@
           "kind": "AI ETF",
           "date": "2026-11-13",
           "price": 65.6,
-          "volume": 327697,
+          "volume": 327700,
           "rvol": 0.5,
           "returns": {
             "1": -2.18,
@@ -437,26 +437,30 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "ARTY",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 65.6,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ARTY"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "AIQ",
           "name": "AIQ",
           "kind": "AI ETF",
           "date": "2026-11-13",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 58.72,
+          "volume": 1054300,
+          "rvol": 0.64,
+          "returns": {
+            "1": -1.29,
+            "5": 3.22,
+            "20": -5.32
+          },
+          "vs_spy": {
+            "1": -0.93,
+            "5": 0.62,
+            "20": -4.16
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "SMH",
@@ -556,7 +560,7 @@
           "kind": "股票",
           "date": "2026-11-13",
           "price": 167.99,
-          "volume": 15131599,
+          "volume": 15169600,
           "rvol": 0.59,
           "returns": {
             "1": -2.09,
@@ -571,18 +575,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "PLTR",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 167.99,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/PLTR"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSFT",
@@ -631,7 +624,7 @@
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-11-13",
           "price": 38.94,
-          "volume": 52450332,
+          "volume": 52728000,
           "rvol": 1.21,
           "returns": {
             "1": -3.52,
@@ -646,18 +639,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "IBIT",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 38.94,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/IBIT"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "FBTC",
@@ -665,8 +647,8 @@
           "kind": "現貨 Bitcoin ETP",
           "date": "2026-11-13",
           "price": 59.86,
-          "volume": 3807944,
-          "rvol": 1.03,
+          "volume": 3834000,
+          "rvol": 1.04,
           "returns": {
             "1": -3.5,
             "5": -9.17,
@@ -680,18 +662,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "FBTC",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 59.86,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/FBTC"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "BKCH",
@@ -699,8 +670,8 @@
           "kind": "區塊鏈股票 ETF",
           "date": "2026-11-13",
           "price": 45.56,
-          "volume": 25623,
-          "rvol": 0.47,
+          "volume": 25600,
+          "rvol": 0.46,
           "returns": {
             "1": -3.88,
             "5": -1.83,
@@ -714,27 +685,16 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "BKCH",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 45.56,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/BKCH"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "COIN",
           "name": "Coinbase",
           "kind": "股票",
           "date": "2026-11-13",
-          "price": 127.64,
-          "volume": 7877144,
-          "rvol": 0.94,
+          "price": 127.65,
+          "volume": 7910100,
+          "rvol": 0.95,
           "returns": {
             "1": -2.31,
             "5": -5.28,
@@ -748,18 +708,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "COIN",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 127.645,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/COIN"
-          }
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "MSTR",
@@ -789,8 +738,23 @@
           "name": "MARA",
           "kind": "股票",
           "date": "2026-11-13",
-          "status": "unavailable",
-          "error": "Closing quote is stale, intraday, or after-hours"
+          "price": 6.99,
+          "volume": 42215200,
+          "rvol": 1.07,
+          "returns": {
+            "1": -2.92,
+            "5": 10.08,
+            "20": -7.17
+          },
+          "vs_spy": {
+            "1": -2.55,
+            "5": 7.48,
+            "20": -6.01
+          },
+          "status": "available",
+          "missing_close_dates": [],
+          "missing_volume_dates": [],
+          "source": "yahoo_adjusted_daily_history"
         },
         {
           "ticker": "RIOT",
@@ -798,8 +762,8 @@
           "kind": "股票",
           "date": "2026-11-13",
           "price": 17.52,
-          "volume": 22364875,
-          "rvol": 0.81,
+          "volume": 22382000,
+          "rvol": 0.82,
           "returns": {
             "1": -1.74,
             "5": 4.85,
@@ -813,18 +777,7 @@
           "status": "available",
           "missing_close_dates": [],
           "missing_volume_dates": [],
-          "source": "yahoo_closing_quote",
-          "priceRecovery": {
-            "ticker": "RIOT",
-            "market_date": "2026-11-13",
-            "method": "yahoo_regular_market_quote_at_exact_close",
-            "quote_time_utc": "2026-11-13T21:00:00+00:00",
-            "source_field": "meta.regularMarketPrice",
-            "price": 17.52,
-            "reason": "daily Close and Adj Close were null",
-            "adjustment_basis": "latest session factor 1; prior adjusted series from same response",
-            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/RIOT"
-          }
+          "source": "yahoo_adjusted_daily_history"
         }
       ]
     }
