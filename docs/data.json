@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-28 04:01:20 UTC",
+  "last_updated": "2026-11-28 08:00:58 UTC",
   "market_date": "2026-11-27",
   "data_quality": "partial",
   "missing_off_exchange": [
@@ -26,7 +26,7 @@
     "expected_market_date": "2026-11-27",
     "first_required_session": "2026-10-29",
     "required_sessions": 21,
-    "asof_utc": "2026-11-28T03:59:18.167493+00:00",
+    "asof_utc": "2026-11-28T07:58:58.480343+00:00",
     "publication_buffer_minutes": 30,
     "recovered_tickers": [],
     "closing_quote_recoveries": [],
@@ -202,7 +202,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlk/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xlk/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
@@ -226,7 +226,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xli/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xli/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
@@ -250,7 +250,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xle/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xle/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
@@ -274,7 +274,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xbi/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xbi/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
@@ -298,7 +298,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlf/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xlf/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
@@ -322,8 +322,8 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
-      "darkPoolAttempts": 2
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xlp/exchange-volume/",
+      "darkPoolAttempts": 3
     },
     {
       "ticker": "XLV",
@@ -346,7 +346,7 @@
       "darkPoolAsOf": null,
       "darkPoolSource": "https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolMetric": "off_exchange_day_pct",
-      "darkPoolError": "Ticker-specific off-exchange summary not found",
+      "darkPoolError": "500 Server Error: Internal Server Error for url: https://chartexchange.com/symbol/nyse-xlv/exchange-volume/",
       "darkPoolAttempts": 3
     },
     {
